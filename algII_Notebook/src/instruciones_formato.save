@@ -1,0 +1,34 @@
+**Instrucciones de Formato para Código Java (Eclipse, Linux Mint):**
+
+### **Convenciones de Nombres:**
+- **Clases:** Comienzan con mayúscula (Ej.: `Ej2Circulo`).
+- **Métodos:** Comienzan con minúscula (Ej.: `calcularDiametro`).
+- **Atributos/Variables/Argumentos:** Comienzan con minúscula (Ej.: `radio`).
+- **Constantes:** Todo en mayúsculas (Ej.: `PI`).
+- **Paquetes:** Todo en minúscula (Ej.: `tp1`).
+- **Nombres descriptivos y en español (o inglés consistente)**, evitando abreviaturas poco claras y nombres genéricos (`Clase`, `Main`).
+- **No usar acentos ni caracteres especiales.**
+- Para colecciones, usar plurales (Ej.: `empleados`, `items`).
+
+### **Estructura del Código:**
+- **Orden en la clase:** Atributos, constructores, métodos, clases internas.
+- **Un atributo por línea.**
+- **Alcance de atributos:** `private` por defecto, con getters/setters para acceso/modificación.
+- **Método `toString()` para representar objetos.**
+- **Clases separadas para lógica y prueba (`main()`).**
+- Si hay diagrama UML, seguirlo estrictamente.
+
+### **Formato y Estilo:**
+- **Indentación:** Usar "Source / Format" en Eclipse (Ctrl+Shift+F).
+- **Eliminar código comentado innecesario y warnings de Eclipse.**
+- **No usar `System.out.println()` en clases de lógica.**
+- **Inicializar variables constantes con `static final`.**
+- **Manejo adecuado de excepciones.**
+
+### **Buenas Prácticas:**
+- **Código funcional y bien documentado (JavaDoc).**
+- **Lógica clara y eficiente, sin código repetido ni comparaciones innecesarias.**
+- **Evitar "números mágicos" (usar constantes).**
+- **Verificar archivos subidos al Campus (solo los necesarios, sin errores sintácticos).**
+
+

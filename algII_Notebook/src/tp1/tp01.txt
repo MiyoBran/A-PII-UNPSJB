@@ -1,0 +1,45 @@
+﻿1. Escribir un programa que lee dos números e imprima la suma, producto, diferencia y cociente de los números.
+
+2. Escribir un programa que reciba el radio de un círculo e imprima el diámetro (2r), la circunferencia (2πr) y el área (πr2) de este círculo. Utilizar el valor constante 3.14159 para π.
+
+3. Escribir un programa que lee dos números e imprima el número más grande seguido de las palabras es más grande. Si son iguales, imprimir el mensaje los números son iguales.
+
+4. Escribir un programa que lee un número e imprima si es par o impar utilizando el operador módulo.
+
+5. Escribir un programa que lee dos números e imprima si el primero es múltiplo del segundo.
+
+6. Escribir un programa que lee un nombre y un apellido por separado y lo muestre concatenado y separado por un espacio.
+
+7. Escribir un programa que imprima una tabla de los cuadrados y los cubos de los números del 0 al 10. 
+
+8. Escribir un programa que lee diez números e imprima la cantidad de números negativos, positivos y ceros.
+
+9. Escribir un programa que lee diez números e imprima el número más grande y el número más pequeño.
+
+10. Escribir una aplicación que encuentre el menor de varios enteros. El primer valor leído especifica el número de valores que el usuario va a introducir.
+
+11. Escribir un programa que lee cinco números entre 1 y 30 y dibuje un histograma horizontal usando *
+
+12. Escribir un programa que lee 20 números y al final imprime los mismos descartando los duplicados.
+
+13. Escribir un programa para simular el lanzamiento de dos dados. El programa debe pedir el número de veces que se tiran los dados y mostrar una tabla indicando cuantas veces aparece cada suma.
+
+14. Escribir el método factorial y un programa que lee un entero n no negativo y calcula su factorial del mismo.
+
+15. Escribir un programa que calcula el valor de e a partir de la serie infinita:
+e = 1 + 1/1! + 1/2! + 1/3! + …
+
+16. Escribir un programa que calcula el valor de π a partir de la serie infinita:
+π = 4 – 4/3 + 4/5 – 4/7 + 4/9 – 4/11 + …
+
+17. Escribir el método hipotenusa que calcula la longitud de la hipotenusa de un triangulo recto. 
+
+18. Implementar los siguientes métodos de conversión de temperatura y un programa que muestre su utilización:
+    a) Método fahrToCent  retorna el valor en grados centígrados de una temperatura en grados Fahrenheit. °C = 5.0 / 9.0 * (F - 32)
+    b) Método centToFahr retorna el valor en grados Fahrenheit de una temperatura en grados centígrados. °F = 9.0 / 5.0 * C + 32
+
+19. Escribir el método distancia que calcula la distancia entre dos puntos (x1, y1) y (x2, y2). Todos los números y valores de retorno deben ser de tipo real.
+
+20. Escribir un juego en donde el programa elige un número al azar entre 1 y 1000, luego se le pide al jugador que ingrese un número, se lo compara con el número elegido, si no es igual al elegido se emite el siguiente mensaje: Demasiado alto o Demasiado bajo según corresponda y se pide ingresar un número nuevo. Si el número es igual se emite el mensaje: Adivinaste en n intentos! (donde n es la cantidad de veces que ingresó un número) y se le pregunta al jugador si desea jugar de nuevo.
+
+
