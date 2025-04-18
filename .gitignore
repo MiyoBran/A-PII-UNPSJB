@@ -1,0 +1,39 @@
+# Configuración de Eclipse
+.settings/
+.classpath
+.project
+.metadata/
+local.properties
+*.bak
+*.tmp
+*.swp
+
+# Salidas de compilación y directorios de destino
+bin/
+target/
+
+# Archivos temporales y de log
+*.tmp
+*.log
+
+# Configuraciones de otros IDE (por ejemplo, VSCode, IntelliJ)
+.vscode/
+.idea/
+
+# Archivos y carpetas generados por Maven (si aplica)
+log/
+*.log
+
+# Archivos compilados
+*.class
+
+# Archivos empaquetados (si se generan)
+*.jar
+*.war
+*.ear
+*.jar
+*.zip
+
+# Archivos generados por el sistema operativo
+.DS_Store
+Thumbs.db
