@@ -1,7 +1,5 @@
 # Configuración de Eclipse
 .settings/
-.classpath
-.project
 .metadata/
 local.properties
 *.bak
