@@ -5,6 +5,8 @@ local.properties
 *.bak
 *.tmp
 *.swp
+*~.nib
+.loadpath
 
 # Salidas de compilación y directorios de destino
 bin/
@@ -29,8 +31,12 @@ log/
 *.jar
 *.war
 *.ear
-*.jar
+*.tar.gz
 *.zip
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
 
 # Archivos generados por el sistema operativo
 .DS_Store
