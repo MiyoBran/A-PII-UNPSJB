@@ -1,0 +1,284 @@
+---
+
+## Análisis de Algoritmos - Unidad 4
+
+### Estudios Experimentales
+
+- El estudio de un algoritmo implica analizar los **recursos necesarios para ejecutarlo**, especialmente el **tiempo**.
+- Una forma práctica de estudiar su eficiencia es **implementar el algoritmo** y **medir su rendimiento** sobre diferentes entradas de prueba.
+- En Java, se puede usar el método `System.currentTimeMillis()` para medir **tiempo en milisegundos** desde una fecha de referencia (1/1/1970 UTC).
+
+#### ¿Cómo se mide el tiempo?
+
+```java
+long startTime = System.currentTimeMillis(); // marcar inicio
+/* ejecutar algoritmo */
+long endTime = System.currentTimeMillis();   // marcar fin
+long elapsed = endTime - startTime;          // calcular tiempo transcurrido
+```
+
+> Para operaciones **muy rápidas**, Java ofrece `System.nanoTime()` que mide en **nanosegundos**.
+
+---
+
+### ¿Por qué importa el tamaño de la entrada?
+
+- No solo importa el **código**, sino también **la entrada sobre la cual se ejecuta**.
+- El **tiempo de ejecución** puede variar notablemente entre:
+  - **Mejor caso**
+  - **Peor caso**
+  - **Caso promedio**
+- Por eso es necesario ejecutar pruebas con **varios tamaños y estructuras de entrada**.
+
+Podemos graficar cada ejecución como un punto \((x, y)\), donde:
+- \(x = n\): tamaño del problema
+- \(y = t\): tiempo que tarda en ejecutarse
+
+> Este análisis experimental puede complementarse con **herramientas estadísticas**, que ajustan curvas que modelan el comportamiento del algoritmo (lineal, cuadrático, logarítmico, etc).
+
+---
+
+### ¿La plataforma afecta?
+
+Sí. Los resultados pueden variar según:
+- La **velocidad del procesador**
+- La **carga del sistema**
+- La **implementación de la máquina virtual Java (JVM)**
+- Otros procesos que estén ejecutándose en simultáneo
+
+> Por eso, los resultados experimentales deben tomarse con cuidado, y lo ideal es hacer múltiples mediciones para obtener valores promedio más representativos.
+
+---
+
+### Ejemplo práctico
+
+```java
+// repeat1: utiliza concatenación de Strings (menos eficiente)
+public static String repeat1(char c, int n) {
+    String answer = "";			//<- TIENE UN CARACTER, EL FIN DE String
+    for (int j = 0; j < n; j++)
+        answer += c; // crea un nuevo String en cada iteración, cada string de tamaño n, concatena al /0 inicial la letra que pasamos en c
+    return answer;
+}
+```
+
+- En `repeat1`, el operador `+=` concatena cadenas.
+- Cada vez que se hace `answer += c`, se crea un **nuevo objeto String**, lo que es costoso en términos de tiempo y memoria.
+
+```java
+// repeat2: utiliza StringBuilder (más eficiente)
+public static String repeat2(char c, int n) {
+    StringBuilder sb = new StringBuilder();
+    for (int j = 0; j < n; j++)
+        sb.append(c); // agrega sin crear nuevas instancias en cada paso
+    return sb.toString();
+}
+```
+
+- `repeat2` es mucho más eficiente porque `StringBuilder` trabaja en memoria sin crear nuevas copias.
+
+> Este tipo de comparación experimental permite observar diferencias de rendimiento en implementaciones que **realizan la misma tarea** pero con distinta **estrategia interna**.
+
+---
+
+## Resultados experimentales y análisis
+
+### Comparación práctica: `repeat1` vs `repeat2`
+
+- **`repeat1`**, que utiliza concatenación con `+=`, se vuelve **extremadamente lento** al crecer el valor de `n`.
+- Por ejemplo, al componer una cadena de **12.8 millones de caracteres**, `repeat1` puede tardar **más de 3 días**, mientras que `repeat2` lo hace en **una fracción de segundo**.
+
+#### Observaciones sobre el crecimiento del tiempo de ejecución:
+- En `repeat1`, **duplicar n** puede hacer que el tiempo de ejecución se **cuadruplique o más**.
+- En `repeat2`, al duplicar `n`, el tiempo se **duplica aproximadamente**, indicando un comportamiento mucho más eficiente.
+
+---
+
+## Desafíos del análisis experimental
+
+1.  **Dependencia del entorno**:  
+   Los tiempos experimentales **dependen del hardware y del software** utilizados. Comparar resultados entre computadoras distintas no es confiable.
+
+2. **Cobertura limitada de datos**:  
+   Las pruebas solo se hacen con **cierto conjunto de datos**, dejando fuera otras entradas que podrían afectar la eficiencia.
+
+3. **Necesidad de implementación**:  
+   Un algoritmo debe estar completamente **implementado y funcionando** para poder hacer el análisis experimental, lo que puede ser costoso en tiempo y esfuerzo.
+
+---
+
+## Más allá del análisis experimental
+
+Nuestro objetivo a largo plazo es aplicar un enfoque **teórico** para analizar algoritmos, que:
+
+-  Permita comparar la eficiencia **sin necesidad de implementar los algoritmos.**
+-  Sea **independiente del hardware/software** en el que se ejecuta.
+-  Considere **todas las entradas posibles**, no solo casos puntuales.
+-  Se base en una **descripción de alto nivel** del algoritmo.
+
+> Este enfoque nos lleva a la **notación asintótica** y al análisis formal del **crecimiento del tiempo de ejecución**, que veremos a continuación.
+
+---
+---
+
+## Contando Operaciones Primitivas
+
+Definimos un conjunto de **operaciones primitivas** fundamentales:
+
+- Asignación de un valor a una variable.
+- "Seguir" una referencia de objeto.
+- Realizar una operación aritmética (por ejemplo, sumar dos números).
+- Comparación de dos números.
+- Acceso a un elemento de un arreglo con un índice.
+- Llamar a un método.
+- Retorno de un método.
+
+Idealmente, estas operaciones pueden considerarse como las instrucciones básicas que ejecuta el hardware. Aunque, en la práctica, cada operación primitiva se traduce a un pequeño número de instrucciones de bajo nivel.
+
+En lugar de intentar determinar el tiempo de ejecución exacto de cada operación primitiva, simplemente **contaremos cuántas de estas operaciones se ejecutan** durante la vida de un algoritmo. Este número total de operaciones primitivas, al que llamaremos \(t\), nos proporcionará una medida del tiempo de ejecución del algoritmo.
+
+Es importante destacar que el número \(t\) de operaciones primitivas que realiza un algoritmo será **proporcional al tiempo real** que tarda en ejecutarse dicho algoritmo.
+
+```java
+// pseudo código para la función buscar
+constantes n=...
+tipos elemento=...
+vector=array [1..n] de elementos
+
+// devuelve la posición donde se encuentra el elemento “c” en el
+// vector “a”, previamente ordenado, ó 0 si “c” no se encuentra en “a”
+func buscar(a:vector; c:elemento) dev (r:entero)
+var j:entero
+alg
+j := 1                    // 1 operación (asignación)
+mientras a[j] < c Y j < n  // 4 operaciones (2 accesos a arreglo, 2 comparaciones)
+    j := j + 1             // 2 operaciones (suma, asignación)
+fmientras
+si a[j] = c :              // 2 operaciones (acceso a arreglo, comparación)
+    r := j                 // 1 operación (asignación)
+|sino:
+    r := 0                 // 1 operación (asignación)
+fsi
+fin
+```
+
+### Medición de Operaciones como Función del Tamaño de Entrada
+
+Para comprender cómo el tiempo de ejecución de un algoritmo escala con el tamaño de la entrada, asociamos a cada algoritmo una función \(f(n)\). Esta función \(f(n)\) representa el **número de operaciones primitivas** que el algoritmo realiza en función del tamaño de la entrada \(n\).
+
+### El Peor Caso de la Entrada
+
+Un mismo algoritmo puede exhibir diferentes tiempos de ejecución dependiendo de la **característica específica de la entrada**, incluso si dos entradas tienen el mismo tamaño.
+
+Aunque podríamos intentar calcular un **tiempo de ejecución promedio** considerando todas las posibles entradas de un tamaño dado, este tipo de análisis suele ser matemáticamente complejo y requiere conocimientos avanzados de probabilidad y combinatoria.
+
+En la práctica, es mucho más común y sencillo realizar un **análisis del peor caso**. Este enfoque se centra en identificar la entrada de tamaño \(n\) que provoca la mayor cantidad de operaciones primitivas (y, por lo tanto, el mayor tiempo de ejecución). Las ventajas de analizar el peor caso son:
+
+- Es generalmente **más fácil de identificar** que el caso promedio.
+- Proporciona una **garantía** sobre el límite superior del tiempo de ejecución.
+- Representa el escenario que impone las **mayores demandas** al algoritmo.
+
+Es importante recordar que, para una entrada dada, el tiempo de ejecución real del algoritmo se encontrará en algún punto entre el **mejor caso** (la entrada que requiere menos operaciones) y el **peor caso**.
+
+
+--- Si un algoritmico es muy critico y nos tenemos que asegurar que funciona si o si, se hace un analisis critico teorico, muy complejo.
+```
+¡Tienes toda la razón! Disculpa, me dejé llevar con el formato LaTeX. Para un archivo `.txt`, lo ideal es mantener la notación lo más sencilla posible. Aquí tienes el mismo contenido, pero adaptado para un archivo de texto plano:
+
+```
+## Siete Funciones Comunes en el Análisis de Algoritmos
+
+En el análisis de algoritmos, utilizaremos principalmente un conjunto de siete funciones fundamentales para describir el crecimiento del tiempo de ejecución.
+
+### 1. La Función Constante
+
+La función constante tiene la forma:
+f(n) = c
+donde c es un valor constante (por ejemplo, 5, 27, 210).
+
+La característica principal de esta función es que su valor es **independiente del tamaño de la entrada** n.
+
+La función constante fundamental que utilizaremos como base es:
+g(n) = 1
+
+Cualquier otra función constante f(n) = c puede expresarse como un múltiplo de g(n):
+f(n) = c * g(n) = c * 1 = c
+
+La función constante es crucial porque modela el número de pasos requeridos para ejecutar operaciones básicas en una computadora, como:
+- Sumar dos números.
+- Asignar un valor a una variable.
+- Comparar dos números.
+
+### 2. La Función Logaritmo
+
+La función logaritmo se define como:
+f(n) = log_b n
+donde b > 1 es una constante que representa la base del logaritmo.
+
+El logaritmo es la **operación inversa de la potenciación**:
+x = log_b n si y solo si b^x = n
+
+En informática, la base del logaritmo más común es 2, por lo que a menudo escribimos:
+log n = log2 n
+
+A continuación, se presentan algunas **reglas importantes de los logaritmos** (para a > 0, b > 1, c > 0, y d > 1):
+
+1.  **Logaritmo de un producto:**
+    log_b (ac) = log_b a + log_b c
+
+2.  **Logaritmo de un cociente:**
+    log_b (a/c) = log_b a - log_b c
+
+3.  **Logaritmo de una potencia:**
+    log_b a^c = c log_b a
+
+4.  **Cambio de base:**
+    log_b a = log_d a / log_d b
+
+5.  **Relación entre logaritmo y exponencial:**
+    b^(log_d a) = a^(log_d b)
+
+**Aplicación práctica del cambio de base:** La regla 4 nos permite calcular logaritmos en base 2 utilizando una calculadora con logaritmo en base 10 (LOG):
+log2 n = LOG n / LOG 2
+```
+### 3 La función lineal
+f (n) = n. ---> 1 ciclo 
+Por ejemplo, comparar un número x con cada elemento de un arreglo de tamaño n requerirá n comparaciones. 
+La función lineal también representa el tiempo de ejecución para cualquier algoritmo que procesa cada uno de los n objetos que no están ya en la memoria del ordenador, ya que la lectura en los n objetos demandará de n operaciones de lectura.
+
+4.La función N-Log-N
+f (n) = nlog n ---> por ejemplo busqueda binaria
+Esta función crece un poco más rápidamente que la función lineal y mucho menos rápidamente que la función cuadrática.
+ Por lo tanto, preferiríamos mucho un algoritmo con un tiempo de ejecución que sea proporcional a n log n, que uno con tiempo de ejecución cuadrático.
+ 
+ 5.La función cuadrática
+ f (n) = n 2
+La razón principal por la cual la función cuadrática aparece en el análisis de algoritmos es que hay muchos algoritmos que tienen bucles anidados, donde el bucle interno realiza un número lineal de operaciones y el bucle externo se realiza un número lineal de veces.
+Por lo que el algoritmo se ejecuta n*n= n 2
+
+La función cuadrática
+En 1787, un maestro alemán decidió mantener a sus alumnos de 9 y 10 años ocupados sumando los números enteros de 1 a 100. Pero casi de inmediato uno de los niños afirmó tener la respuesta. El maestro sospechó, pues el estudiante sólo tenía la respuesta en su pizarra. Pero la respuesta, 5050, era correcta y el estudiante, Carl Gauss, llegó a ser uno de los matemáticos más grandes de su tiempo.
+Suponemos que el joven Gauss utilizó la siguiente identidad. Para n>1
+1+2+3+...+(n-2)+(n-1)+n = n(n+1)/2
+Para ser justos, el número de operaciones es n2 / 2 + n / 2, por lo que esto es poco más de la mitad del número de operaciones que un algoritmo que utiliza n operaciones cada vez que se realiza el bucle interno. Pero el orden de crecimiento sigue siendo cuadrático para n
+
+** Un algoritmo se vuelve cuadratico cuando tenemos dos ciclos anidados --> ejemplo bubleSort
+
+6. La función cúbica y otras polinomiales
+f (n) = n3 ---> 3 ciclos anidados
+
+7. Funcion exponencial
+--> el unico motivo por el que seria aceptable usar un algoritmo exponencial es porque para los datos de entrada es suficiente y no tenemos problema
+Por ejemplo, un entero que contenga n bits puede representar todos los enteros no negativos inferiores a 2n. 
+Si tenemos un bucle que comienza realizando una operación y luego duplica el número de operaciones realizadas con cada iteración, entonces el número de operaciones realizadas en la iteración n es 2n.
+
+
+
+##
+Big O -> Peor caso
+Big OH
+
+Big Omega -> caso promedio
+Big Theta ->  mejor caso
+
+Si un algoritmo tiene O(n²) y omega(

@@ -1,0 +1,387 @@
+Algoritmica II Teoria 7-4-25
+Estructura de datos  y algoritmos en JAVA . 	Michaelt T Goodrich
+
+TIPOS FUNDAMENTALES DE DATOS
+---------------------------------------------------------------
+### Arreglos
+La declaracion del arreglo tiene una sintaxis especifica ,  elemenType [] nombreVector = {elemento, elemento2,elemento 3};
+Como los arreglos se cargan secuencialmente sin dejar espacios:
+- Si necesito hacer una insercion entre un elemento y otro (por ejemplo para ordenarlo), debo previamente hacer  el desplazamiento.
+- SI quiero eliminar un registro del array, tambien debo hacer un desplazamiento.
+Pseudocodigo: de ordenamiento con fuerza bruta
+#### Algorithm InsertionSort(A)
+		Input: Un arreglo A de n elemetos comparables
+		Output: EL arreglo A con los elementos ordenados en orden creciente
+		for k from 1 to n-1 do
+		Insert A [k] a este en el lugar apropiado de A[0], A[] []
+		
+
+####Paquete java.util --->Metodos de java.utilpara Arreglos  (A o B son los nombres de los arreglos, es decir la referencia al objeto, o su direccion de memoria)
+*equals(A,B) : compara si las referencias de los dos elementos son iguales, o sea si se refieren al mismo elemento, pero por ejemplo no me da true si creo dos objetos iguales con los mismos elementos, estan en distintos lugares de memoria asique puede dar false
+*fill(A,x) : permite llenar un arreglo con elementos x
+*copyOf(A,N) copiar desde cero hasta n, los elementos de un arreglo
+*copyOfRange(A,s,t) : copia desde un elemento de inicio que nosotros indicamos, hasta un elmeento de finalizacion el array A 
+*toString(A): lo convierte a texto
+*sort(A): ordena el array
+*bynarySearch(A,x): la busqueda binaria divide el array ya ordenado, para optimizar la busqueda, tiene complejidad algoritmica.
+##### para clase random
+*nextBoolean(); alterna entre 0 y 1, asique en esencia lo cambia
+*nextDouble(): entre 0.0 y 1.0
+*nextInt():
+*nextInt(n) : entre 0 y n
+*setSeed(s): long s (usamos un long, y crea una semilla nueva)
+
+int data []
+int [] orig ; // ambas formas de declarar el arreglo es valida
+
+int [] orig = Arrays.copyOf(data,data.lenght);  // copia el arreglo data, desde la posicion 0 hasta la posicion data.lenght - que es un atributo del arreglo-)
+
+Describir con propiedad:
+Random rand = new Random(); "Creamos con new Random() , que es el metodo constructor de la clase, una nueva instancia de la clase Random, llamada o cuya etiqueta es rand"
+rand.setSeed(System.currentTimeMillis()); "Sabemos que setSeed es un metodo ya que tiene el simbolo (), luego leyendo hacia la izquierda sabemos que es unmetodo de rand, es decir propio de la clase Random
+
+
+Arrays.sort(data) ; metodo propio de la clase Array, ordena el arreglo data de menor a mayo. Al utilizar el metodo Array.equals antes del ordenamiento obtenemos true, pero luego de ordenarlo a pesar de ser del mismo tipo, y tener los mismos datos, el orden cambia por lo tanto es otro arreglo, da false)
+
+Matriz:  son arreglos de mas dimensiones, todas aquellas dimensiones que sean necesarias para representar nuestra realidad,
+los datos de cada dimension se almacenan consecutivos, y 
+
+
+----------
+Criptografia simple con arreglo de caracteres
+*Encriptacion de julio cesar
+*Se puede crear un arreglo de caracteres coincidente con el string S usando el método, S.toCharArray(). Ejemplo si s="bird", el método retorna A={"b","i","r","d"}.
+*El hecho de que los caracteres se representen con unicode , que es un codigo de enteros, y como el alfabeto latino es consecutivo podemos usar esta propiedad.
+
+---------------------------------------------------------------
+### Listas simplemente enlazadas
+Un objeto referencia al inicio de la lista
+Cada objeto tiene tambien una referencia al siguiente elemento(nodo) de la lista. Siempre se avanza, no tengo posibilidad de retroceder 
+Creo una clase con un elemento E generico, y un nodo tambien generico 
+Hay cabeza(referencia al comienzo de la lista), y nodos , es importante representarse visualmente que si sacamos un elemento, tenemos que modificar algunas referencias, por ejemplo al HEAD, al TAIL o al siguiente NODE
+por ejemplo si borramos el primer nodo, cambiamos solo la referencia apuntada por HEAD, para que ahora apunte al siguiente elemento.
+( todo esto tambien implica que no necesariamente eliminamos el dato de memoria, aunque en java hay un garbage collector que evita los memory leaks) 
+	---> JVM es un proceso que corre en el SO , y tiene un subproceso denominado DAEMON, que es un subproceso con baja prioridad , es decir corre cuando el procesador esta ocioso (IDLE). SE fija todas las direcciones de memoria que no son referenciadas por nadie y las libera.
+		esto solo es una expresion de deseo porque tiene que ser posible que la subrutina se ejecute. Salvo que se haga expresamente con un metodo ?
+pseudocogido para remoFirst()
+	if head == null then
+		the list is empty
+	head = head.next		(make head point to next node (or null))
+	size = size -1			(
+
+
+### Lista Enlazada Circulares
+En una lista enlazada circular, el último nodo apunta al primero, formando un ciclo cerrado.
+Ahora tenemos una manera de llegar al elemento anterior, pero esto es posible si recorremos la lista completa y frenamos en el anterior al que estamos.
+
+Una de sus aplicaciones es en el Round Robin Scheduling, un algoritmo de planificación utilizado por los sistemas operativos para asignar tiempo de CPU a los procesos. El funcionamiento básico es el siguiente:
+
+Se toma el primer proceso de la lista: proceso p = L.removeFirst()
+
+Se le asigna un time slice (intervalo de tiempo para ejecutar).
+
+Al finalizar su turno, se vuelve a insertar al final de la lista: L.addLast(p)
+	-->El time slice es un mecanismo mediante el cual el sistema operativo asigna a cada proceso un pequeño intervalo de tiempo para ejecutarse, permitiendo una distribución equitativa del tiempo de CPU entre todos los procesos.
+
+			Optimización con Listas Enlazadas Circulares
+			En las listas enlazadas circulares, se puede agregar una optimización:
+			la cola (tail) ya no apunta a null, sino que apunta directamente al primer nodo (head), cerrando así el ciclo.
+
+			Se incorpora el método rotate() a la lista:
+
+			rotate(): mueve el primer elemento al final de la lista.
+
+			Esto permite implementar de forma más eficiente el CPU scheduling (por ejemplo, el algoritmo Round Robin), ya que evita eliminar y volver a insertar nodos constantemente.
+		-->Idea de optimización:
+			Incluso se podría eliminar la referencia explícita a head, ya que se sabe que el siguiente nodo después de tail es siempre head.
+			Esto permite ahorrar memoria al evitar una referencia adicional, haciendo que tail.next actúe como head.
+		
+		**Ejemplo de Operaciones en una Lista Enlazada Circular
+			Supongamos que tenemos una lista circular con los siguientes elementos en orden:
+			LAX → MSP → ATL → BOS → (vuelta a LAX), donde LAX es el tail (último nodo), y por lo tanto tail.getNext() apunta a MSP, el primer nodo (head implícito).
+
+			Ahora realizamos la operación:
+
+			addFirst("STL")
+			Queremos insertar "STL" al principio de la lista. Este es el procedimiento:
+
+			Creamos un nuevo nodo "STL" y lo referenciamos temporalmente con una variable llamada newest.
+
+			Establecemos que newest.next = tail.getNext()
+			→ es decir, "STL" apunta a "MSP" (el antiguo primer nodo).
+
+			Luego hacemos tail.setNext(newest)
+			→ es decir, "LAX" (tail actual) ahora apunta a "STL", insertando "STL" al principio del ciclo.
+
+			Finalmente, newest ya no es necesario como referencia adicional, porque la estructura de la lista ya está actualizada.
+
+			-->Resultado:
+			La lista ahora se ve así:
+			LAX → STL → MSP → ATL → BOS → (vuelta a LAX)
+			Y el nuevo primer elemento es "STL", accesible como tail.getNext().
+
+			* Esto ilustra cómo, en una lista circular, no necesitamos una referencia explícita a head: siempre podemos acceder al primer nodo a través de tail.getNext().
+			
+		** Analisi de codigo de CircularLinkedList<E>{}
+			->el primer elemento cuando lo cargamos, es con un  metodo especial ya que se referencia a si mismo
+		
+
+### Listas Doblemente Enlazadas
+
+En las **listas doblemente enlazadas**, cada nodo contiene dos referencias:
+- Una al **nodo siguiente** (`next`)
+- Otra al **nodo anterior** (`prev`)
+
+Esta estructura permite recorrer la lista en ambos sentidos, hacia adelante y hacia atrás.
+
+---
+
+#### Uso de Centinelas
+
+Para simplificar las operaciones de inserción y eliminación, se introducen dos **nodos centinelas**:
+- `HEADER`: se ubica antes del primer nodo real.
+- `TRAILER`: se ubica después del último nodo real.
+
+Por ejemplo, la lista puede verse así:  
+`HEADER <-> JFK <-> PVD <-> SFO <-> TRAILER`
+
+Esto elimina la necesidad de referencias `null` en los extremos de la lista.
+
+---
+
+#### Ventajas de utilizar centinelas
+
+- Se **simplifica el algoritmo**: todas las inserciones y eliminaciones se realizan entre dos nodos existentes (`prev` y `next`), sin necesidad de condicionales especiales.
+- Se emplea el método `addBetween` para insertar elementos:
+
+```java
+addBetween(E e, Node<E> predecessor, Node<E> successor) {
+    // create and link a new node
+    Node<E> newest = new Node<>(e, predecessor, successor);
+    predecessor.setNext(newest);
+    successor.setPrev(newest);
+    size++;
+}
+```
+
+  Lo único que cambia si se inserta al principio o al final es el par de nodos (`predecessor` y `successor`) que se pasan como parámetros.
+
+- Se **unifican los casos**: no se requiere lógica distinta para insertar o eliminar al principio o al final.
+- El **costo adicional de memoria** por los nodos centinela se compensa con la mayor claridad y robustez del código.
+
+
+			
+	Implementación
+• size( ): Returns the number of elements in the list.
+• isEmpty( ): Returns true if the list is empty, and false otherwise.
+• first( ): Returns (but does not remove) the first element in the list.
+• last( ): Returns (but does not remove) the last element in the list.
+• addFirst(e): Adds a new element to the front of the list.
+• addLast(e): Adds a new element to the end of the list.
+• removeFirst( ): Removes and returns the first element of the list.
+• removeLast( ): Removes and returns the last element of the list.
+
+
+
+###PRUEBA DE EQUIVALENCIA
+la comparacion por ejemplo puede dar diferente si  referencian a distinto objeto aunque el contenido sea el mismo, ejemplo si creo un objeto Persona con los mismos datos, pero en distinto "Lugar" en la lista
+es importante saber si queremos saber si la igualdad esta dada por el hecho de un lugar en la lista, es decir si apuntan al mismo lugar, o si es igualdad de contenido.
+cada programador tiene que porporcionar un metodo que permita comparar de manera adecuada las listas segun los parametros que nosotros consideramos
+
+### Prueba de Equivalencia
+
+Cuando se trabaja con **tipos de referencia**, es importante comprender qué significa que una expresión sea "igual" a otra. Existen distintas formas de comparar objetos, y la diferencia puede ser significativa en estructuras como listas o colecciones.
+
+---
+
+#### Identidad vs Equivalencia
+
+- La expresión `a == b` verifica si **`a` y `b` apuntan al mismo objeto** en memoria (es decir, si son exactamente la misma instancia).
+- Esto significa que **dos objetos con el mismo contenido pueden no ser iguales con `==`** si fueron creados en distintos lugares.
+
+Ejemplo:
+```java
+Persona p1 = new Persona("Ana", 25);
+Persona p2 = new Persona("Ana", 25);
+
+System.out.println(p1 == p2);      // false (distintas instancias)
+System.out.println(p1.equals(p2)); // true (si equals está bien implementado)
+```
+
+---
+
+#### Método `equals()`
+
+Para admitir una noción más amplia de equivalencia basada en contenido (y no en ubicación en memoria), **todos los objetos en Java tienen el método `equals()`**, heredado de la clase `Object`.
+
+- Por defecto, `equals()` en `Object` hace exactamente lo mismo que `==`.
+- Para que dos objetos sean considerados equivalentes por contenido, es necesario **sobrescribir `equals()`** en la clase correspondiente.
+
+---
+
+#### Responsabilidad del desarrollador
+
+El desarrollador de una clase (por ejemplo, `Persona`) tiene la **obligación de sobrescribir `equals()`** si desea que los objetos de esa clase puedan compararse por su contenido.
+
+Esto es especialmente importante si se trabaja con estructuras de datos como listas, sets o mapas, donde la noción de igualdad afecta el comportamiento de búsqueda, inserción y eliminación.
+
+---
+
+#### Reglas formales que debe cumplir `equals()`
+
+La implementación personalizada de `equals()` debe cumplir con las **propiedades de una relación de equivalencia**:
+
+- **Tratamiento de nulo**:  
+  Para cualquier objeto no nulo `x`, `x.equals(null)` debe devolver `false`.
+
+- **Reflexividad**:  
+  Para cualquier objeto `x`, `x.equals(x)` debe devolver `true`.
+
+- **Simetría**:  
+  Para objetos `x` e `y`, `x.equals(y)` y `y.equals(x)` deben devolver el mismo resultado.
+
+- **Transitividad**:  
+  Si `x.equals(y)` y `y.equals(z)` son `true`, entonces `x.equals(z)` también debe ser `true`.
+
+Estas propiedades son fundamentales para garantizar la **consistencia en estructuras de datos** como `HashSet`, `TreeSet` o `HashMap`.
+
+#### Consideraciones finales
+
+Aunque las reglas de `equals()` pueden parecer intuitivas, su implementación correcta puede ser **compleja**, sobre todo en contextos que incluyen:
+- Herencia
+- Tipos genéricos
+- Comparación profunda de estructuras internas
+
+Por eso, es clave definir claramente la noción de igualdad en cada clase que implementamos, en función de lo que se espera comparar.
+
+
+---
+
+### Prueba de Equivalencia con Arreglos y Clonación de Estructuras de Datos
+
+---
+
+#### Arreglos multidimensionales
+
+Para comparar arreglos, Java distingue entre **igualdad de referencias** y **igualdad profunda del contenido**:
+
+```java
+int[][] a = {{1, 2}, {3, 4}};
+int[][] b = {{1, 2}, {3, 4}};
+
+boolean igual = Arrays.equals(a, b);       // false: compara referencias de subarreglos
+boolean igualProfundo = Arrays.deepEquals(a, b); // true: compara contenido recursivamente
+```
+
+- `Arrays.equals` compara las referencias, no el contenido interno si son arreglos de arreglos.
+- `Arrays.deepEquals` compara **recursivamente** los elementos internos.
+
+---
+
+#### ¿Y con listas?
+
+La comparación entre listas (como `ArrayList`) puede hacerse usando `equals()`, que en este caso compara el **contenido y el orden** de los elementos:
+
+```java
+List<String> l1 = new ArrayList<>(List.of("a", "b"));
+List<String> l2 = new ArrayList<>(List.of("a", "b"));
+
+l1.equals(l2); // true: mismo contenido y orden
+```
+
+---
+
+### Clonación de estructuras de datos
+
+Una expectativa común al copiar objetos es que la copia tenga su **propio estado independiente**. Es decir, que modificar la copia no afecte al original.
+
+#### ¿Ejemplo?
+Si clonamos una libreta de direcciones, ¿queremos que al modificar una se modifique también la otra?  
+En general, **no**: buscamos independencia.
+
+---
+
+#### Método `clone()` en Java
+
+- La clase `Object` define un método protegido llamado `clone()`.
+- Su comportamiento por defecto crea una **copia superficial (shallow copy)**:
+  - El nuevo objeto tiene nuevas referencias, pero **los objetos referenciados son los mismos** que en el original.
+- Esto puede ser **peligroso** si las referencias apuntan a estructuras mutables.
+- Java **desactiva** por defecto el uso de `clone()`:
+  - Hay que **implementar explícitamente la interfaz `Cloneable`**
+  - Y **sobreescribir el método `clone()`** como `public`.
+
+---
+
+### Clonación de arreglos
+
+```java
+int[] data = {2, 3, 5, 7, 11, 13, 17, 19};
+int[] backup;
+
+backup = data;       // ¡NO es una copia! Apuntan al mismo arreglo
+
+backup = data.clone(); // Esto sí genera una copia nueva
+```
+
+- Esto es una **copia superficial**, suficiente para **tipos primitivos**.
+
+#### Copia profunda
+
+Si tenemos arreglos que contienen referencias (por ejemplo, un `int[][]`), debemos implementar una copia profunda:
+
+```java
+public static int[][] deepClone(int[][] original) {
+    if (original == null) return null;
+    int[][] clone = new int[original.length][];
+    for (int i = 0; i < original.length; i++) {
+        clone[i] = original[i].clone(); // clonación de cada subarreglo
+    }
+    return clone;
+}
+```
+
+---
+
+### Clonación de listas enlazadas
+
+Cuando trabajamos con estructuras como listas enlazadas, también debemos implementar el método `clone()` si queremos realizar una copia real:
+
+```java
+public class SinglyLinkedList<E> implements Cloneable {
+
+    public SinglyLinkedList<E> clone() throws CloneNotSupportedException {
+        SinglyLinkedList<E> other = (SinglyLinkedList<E>) super.clone();
+
+        if (size > 0) {
+            other.head = new Node<>(head.getElement(), null);
+            Node<E> walk = head.getNext();
+            Node<E> otherTail = other.head;
+
+            while (walk != null) {
+                Node<E> newest = new Node<>(walk.getElement(), null);
+                otherTail.setNext(newest);
+                otherTail = newest;
+                walk = walk.getNext();
+            }
+        }
+
+        return other;
+    }
+
+    // Clase interna Node<E> y otros métodos no mostrados
+}
+```
+
+- Este ejemplo hace una **copia profunda** de una lista simplemente enlazada.
+- Se crea una nueva secuencia de nodos con los mismos elementos, pero independientes del original.
+
+---
+
+
+### Testing de arreglos vs listas
+* Sirve para el analisis de performance de nuestro codigo, conocer las ventajas y desventas de cada uno 
+- Los arrays si quiero insertar o eliminar un elemento, requiere que tengamos codigo especifico para recorrer el arreglo y hacer los desplazamientos correctos /  En las listas esto se resuelve intercambiando referencias
+- Cuando inicializamos un arreglo por ejemplo de estructuras, todos los datos reservados contienen basura
+### Clonacion de estructuras de datos
+Metodos diferentes para clonacion completa de los datos 

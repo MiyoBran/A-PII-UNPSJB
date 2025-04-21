@@ -1,0 +1,39 @@
+
+**Instrucciones de Formato para Código Java (Eclipse):**
+
+**Convenciones de Nombres:**
+
+* Clases: Comienzan con mayúscula (Ej.: `Ej2Circulo`).
+* Métodos: Comienzan con minúscula (Ej.: `calcularDiametro`).
+* Atributos/Variables/Argumentos: Comienzan con minúscula (Ej.: `radio`).
+* Constantes: Todo en mayúsculas (Ej.: `PI`).
+* Paquetes: Todo en minúscula (Ej.: `tp1`).
+* Usar nombres descriptivos y en español (o inglés consistente). Evitar abreviaturas poco claras, nombres genéricos (Ej.: `Clase`, `Main`) y nombres que indiquen versión.
+* No usar acentos ni caracteres especiales.
+* Para colecciones, usar plurales (Ej.: `empleados`, `items`).
+
+**Estructura del Código:**
+
+* Orden en la clase: atributos, constructores, métodos, clases internas
+* Un atributo por línea.
+* Alcance de atributos: `private` por defecto. Usar getters/setters para acceso/modificación (excepto para atributos internos). Validar datos en constructores y setters.
+* Método `toString()` para representar objetos.
+* Clases para cálculos separadas de las clases de prueba (con `main()`).
+* Si hay diagrama UML, seguirlo estrictamente (nombres, tipos, alcances, relaciones).
+
+**Formato y Estilo:**
+
+* Indentación: Usar la función "Source / Format" de Eclipse (Ctrl+Shift+F).
+* Eliminar código comentado innecesario, archivos no relacionados y warnings de Eclipse.
+* No usar `System.out.println()` en clases de lógica de la aplicación.
+* Inicializar variables constantes con `static final`.
+* Manejar excepciones adecuadamente.
+
+**Buenas Prácticas:**
+
+* El código debe funcionar y cumplir con las especificaciones.
+* Lógica clara y eficiente, sin código repetido ni comparaciones innecesarias.
+* Código bien documentado (JavaDoc).
+* Evitar "números mágicos" (usar constantes).
+* Verificar archivos subidos al Campus (solo los necesarios, sin errores sintácticos).
+

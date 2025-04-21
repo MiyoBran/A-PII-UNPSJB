@@ -1,0 +1,107 @@
+25-3-25 Teoria
+Introduccion Miscelanea
+Respecto de ia -> es una herramienta
+Es importante definir claramente la funcionalidad de un objeto -> para eso es  necesaria la formacion correcta para preguntar de manera adecuada pero tambien para poder evaluar el resultado
+Por ejemplo podriamos definir caracterisiticas a evaluar
+Haciendo correctamente la especificacion funcional uno puede conseguir que la IA escriba o traduzca el codigo a cualquier idioma.
+---------------------------------------
+
+Introduccion de POO
+->Un paradigma diferente a la programacion estructurada (otros - programacion logica / programacion visual? )
+-> Hay diferentes patrones de Diseño.
+->Es importante no arrastrar vicios - malos hábitos creados en la programacion estructurada
+->Cada objeto es una instancia de una clase creada por un programa, informacion concisa y consistente sin dar necesariamente acceso a otros al funcionamiento
+// Es importante usar la terminologia correcta y especifica para comunicar de manera correcta a otros programadores
+-> La definicion de clase tipicamente tiene VARIABLES DE INSTANCIA ( son los atributos/ miembros de datos que tiene la clase) y METODOS (funciones miembro)
+METAS: ROBUSTEZ (no se rompe)- ADAPTABILIDAD(evolucion con el tiempo-portable) - REUSABILIDAD(en el fondo es lo que hace rentable la programacion). 
+-> El paradigma nos ayuda con herramientas para poder conseguir estas metas
+--------------
+*Contenidos minimos de la materia *
+* no hay ISSFP (practicas profesionalizantes) -> si trabajo integrador similar
+
+->Tipos de datos Abstractos: Es un tipo de dato en el que no ncesitamos o queremos saber como funciona algo --> permite hacer codigo de gran envergadura.
+->TAD es un modelo de una estructura de datos que especifica el tipo de dato , las operaciones soportadas por el y los tipos de parametros de las operaciones,
+->El conjunto colectivo de comportamientos respaldados por un TAD es su interfaz pública.
+EN JAVA : los metodos y atributos publicos componen la interfaz. - La manera que yo tengo de interactuar con el objeto.
+Para poder conocer la clase, pero sin ponerme a leer el codigo especificamente , es necesaria documentacion.
+
+-->Abstraccion 
+-->Encapsulamiento : en java es mediante las clases
+-->Modularidad : puede haber n clases y anidamiento de clases.
+-->Patrones de Diseño:  (es parte del meta-lenguaje de los programadores) ---PROFUNDIZAR
+	*Patrones algoritmicos:
+		*Recursion : muchas veces el codigo ademas de ser menor, muchas veces se parece mas a la representacion "natural". Puede ser mas costoso en termino de uso de Pila por ej.
+		*Amortizacion
+		*Divide and conquer
+		*Prune and search : podar y buscar
+		*Brute force : no tratar de optimizar el codigo, 
+		*Dynamic programming : la idea es usar mas memoria dinamica
+		*The greedy method : 
+		
+	*Patrones de diseño de software: (a veces para todo o para solo una parte del codigo)
+		*Iterator :  
+		*Adapter : 
+		*Position : 
+		*Composition : 
+		*Template method : 
+		*Locator : 
+		*Factory method : 
+		
+	----> EN grandes empresas es un metodo en cascada : Analisis->Diseño->Programacion . En las grandes empresas es muy importante la documentacion en cada etapa del proceso.
+-------------
+DISEÑO DE SOFTWARE ORIENTADO A OBJETOS:
+++Encapsulamiento
+++ HERENCIA
+++ Polimorfismo
+
+*Responsabilidades: cada clase tiene que tener claro cual es su responsabilidad.
+*Independencia: define el trabajo para que sea lo mas independiente de otras clases como sea posible
+*Comportamientos: definir los comportamientos de cada clase con cuidado, de modo que las consecuencias de cada accion se bien comprendida por cada clase que interactue con ella
+---
+LENGUAJE DE MODELADO UNIFICADO (UML)
+*Un diagrama de clase tiene tres porciones
+1-EL nombre de la clase3-Las variables de instancia recomendadas
+2-Las variables de instancia recomendadas ( los atributos y con sus tipos y acceso)
+3-Los metodos de clases recomendados : nombres (importantes que los nombres sean significativos)
+--------
+DEFINICIONES DE CLASES : Propone datos y comportamientos
+*Una clase sirve como el medio principal para la abstraccion en la POO
+*En JAVA, cada variable es un tipo bas (primitivo) o es una referencia a una instancia de alguna clase.
+*La clase sirve como modelo  para sus instancias
+CONSTRUCTOS: metodo que tiene el mismo nombre que la clase, y tiene como responsabilidad establecer el estado de un objeto  con valores iniciales apropiados para sus variables de instancia. 
+---------
+El paradigma POO tambien el concepto de HERENCIA
+*Mecanismo para una organizacion modular y jerarquica es la herencia.
+*Nos permite reutilizar gran parte del codigo y sobre todo poder crear objetos que contemplen muchas posibilidades diferentes y determinar que comportamientos son adecuados en cada caso (EJEMPLO UML EDIFICIO)
+*Esto permite que se defina una nueva clase basada en una clase existente como punto de partida
+*La clase existente normalmente se describe como la CLASE BASE, clase principal o superclase, mientras que la clase recien definida se conoce como subclase o clase hija.
+*Hay dos formas en que una subclase puede diferenciarse de su superclase:
+	*Una subclase puede especializar un comportamiento existente al proporcionar una nueva implementacion que anula un método existente
+	*Una subclase tambien puede extender funcionalidades
+
+**** Los constructores NUNCA se heredan en java; por lo tanto cada clase debe definir su propio constructor.
+****Todas sus variables de instancia deben estar inicializadas correctamente , INCLUIDOS los campos heredados.
+**** La PRIMERA operacion dentro del cuerpo del constructor debe ser invocar  un constructor de la superclase , que inicializa los campos definidos en la superclase
+**** Un constructor de la superclase  se invoca EXPLICITAMENTE mediante el uso de la palabra clave super()con los parametros adecuados.
+**** Si un constructor para una subclase no realiza una llamada explicita a SUPER o THIS  como su primer comando, entonces  se realizara una llamada implicita a super(), la version de cero parametros  del constructor de la  superclase
+
+------------------
+Ejemplo de EXTENSION (Herencia)
+SOn todas progresiones , y todas siguen unas caracteristicas, y cada una tiene determinadas caracteristicas especificas
+• Una progresión numérica es una secuencia de números, donde cada
+número depende de uno o más de los números anteriores.
+• Una progresión aritmética determina el siguiente número agregando
+una constante fija al valor anterior.
+• Una progresión geométrica determina el próximo número
+multiplicando el valor anterior por una constante fija.
+(Los tipos de datos protegidos, son accesibles por las subclases) --> ejemplo el largo de la progresion , que si esta en la sueprclase, debe ser accesible por las subclases
+------------
+La palabra reservada , que se incluye en la declaracion de la clase es extends , por ejemplo public class ArithmeticProgression extends Progression{ , si antes habiamos creado una clase Progression 
+
+---> Tienen sus proximos constructores, y por ejemplo podemos contemplar la creacion de la clase con distintas cantidades de argumentos (vacio, con 1 o con 2)  ---> Sobrecarga de metodos
+---> Si creamos un metodo con el mismo nombre, cambiamos la referencia al metodo y de esta manera "ocultamos" ese metodo y ejecutamos el de la subclase : SOBREESCRITURA de metodo
+--->En JAVA , todas las clases que creamos , heredan de la SUPERCLASE Object.
+
+-------++++++ Muchas veces la clase RAIZ o SUPERCLASE es ABSTRACTA , la declaramos usando la palabra reservada abstract, ejemplo  public AbstractProgression , nosotros no podemos crear 
+clases abstractas, sin embargo podemos crear referencias de clases abstractas, o referencias de subclases. Los metodos o distintos datos si son accesibles por las subclases.
+ ---> Por ejemplo seleccionamos unidades en un juego, pero no todas el mismo modo de moverse o por donde pueden hacerlo
