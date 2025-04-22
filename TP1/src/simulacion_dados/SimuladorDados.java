@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class SimuladorDados {
 	public static int [] ejecutarSimulacion(int numeroLanzamientos) {
-		int [] frecuencias = 0 ; // aqui guardaremos la cantidad de veces que aparece
+		int frecuencias = 0 ; // aqui guardaremos la cantidad de veces que aparece
 		
 		
 		return null;

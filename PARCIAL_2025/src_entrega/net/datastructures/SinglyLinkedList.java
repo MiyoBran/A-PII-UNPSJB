@@ -247,94 +247,135 @@ public class SinglyLinkedList<E> implements Cloneable {
 		return sb.toString();
 	}
 
-	/**
-	 * Retorna la lista con todos los elementos de la lista l combinados despu�s del
-	 * primer elemento de la lista.
-	 *
-	 * Por ejemplo:
-	 * 
-	 * {A, B, C, D} {W, X, Y, Z} => {A, W, B, X, C, Y, D, Z}
-	 * 
-	 * {A, B, C, D} {W, X} => {A, W, B, X, C, D}
-	 * 
-	 * {A, B} {W, X, Y, Z} => {A, W, B, X, Y, Z}
-	 * 
-	 * {A, B, C, D} {} => {A, B, C, D}
-	 * 
-	 * {} {W, X, Y, Z} => {W, X, Y, Z}
-	 * 
-	 * {} {} => {}
-	 * 
-	 * @param SinglyLinkedList<E> l : lista con los elementos a combinar
-	 * 
-	 * @return lista original con todos los elementos de la lista l combinados
-	 *         despu�s del primer elemento de la lista original
-	 * 
-	 */
-	public void addCombineAfter(SinglyLinkedList<E> l) {
-		Node<E> walk1 = head;
-		Node<E> walk2 = l.head;
-		Node<E> newest = null;
-		while (walk1 != null && walk2 != null) {
-			newest = new Node<>(walk2.getElement(), walk1.getNext());
-			walk1.setNext(newest);
-			walk1 = walk1.getNext().getNext();
-			walk2 = walk2.getNext();
-			size++;
-		}
-		if (walk1 == null)
-			tail = newest;
-		while (walk2 != null) {
-			addLast(walk2.getElement());
-			walk2 = walk2.getNext();
-		}
-	}
+//--- INICIO: Métodos Añadidos para Parcial 2025 ---
 
 	/**
-	 * Retorna la lista con todos los elementos de la lista l combinados antes del
-	 * primer elemento de la lista.
+	 * Elimina todos los elementos que están en una posición considerada impar (1°,
+	 * 3°, 5°, etc., correspondiente a índices 0, 2, 4,...). Modifica la lista
+	 * original. Retorna una nueva lista con los elementos eliminados.
 	 *
-	 * Por ejemplo:
-	 * 
-	 * {A, B, C, D} {W, X, Y, Z} => {W, A, X, B, Y, C, Z, D}
-	 * 
-	 * {A, B, C, D} {W, X} => {W, A, X, B, C, D}
-	 * 
-	 * {A, B} {W, X, Y, Z} => {W, A, X, B, Y, Z}
-	 * 
-	 * {A, B, C, D} {} => {A, B, C, D}
-	 * 
-	 * {} {W, X, Y, Z} => {W, X, Y, Z}
-	 * 
-	 * {} {} => {}
-	 * 
-	 * @param SinglyLinkedList<E> l : lista con los elementos a combinar
-	 * 
-	 * @return lista original con todos los elementos de la lista l combinados antes
-	 *         del primer elemento de la lista original
-	 * 
+	 * @return Una nueva SinglyLinkedList con los elementos eliminados (de
+	 *         posiciones 1°, 3°, ...).
 	 */
-	public void addCombineBefore(SinglyLinkedList<E> l) {
-		Node<E> walk1 = head;
-		Node<E> walk2 = l.head;
-		Node<E> newest = null;
-		if (walk2 != null) {
-			addFirst(walk2.getElement());
-			walk2 = walk2.getNext();
+	public SinglyLinkedList<E> removeOdd() { // Mantenemos nombre original del método
+		SinglyLinkedList<E> removedList = new SinglyLinkedList<>();
+
+		if (isEmpty()) {
+			return removedList; // Nada que hacer ni remover
 		}
-		while (walk1 != null && walk2 != null) {
-			newest = new Node<>(walk2.getElement(), walk1.getNext());
-			walk1.setNext(newest);
-			walk1 = walk1.getNext().getNext();
-			if (walk1 != null) {
-				walk2 = walk2.getNext();
-			size++;
+
+		// 1. Tratar el primer elemento (posición 1 impar, índice 0) - Siempre se
+		// elimina
+		Node<E> nodeToRemove = head;
+		removedList.addLast(nodeToRemove.getElement());
+		head = head.getNext(); // El segundo elemento se convierte en la nueva cabeza
+		size--;
+		// Si la lista tenía solo un elemento, head ahora es null, tail también debe ser
+		// null
+		if (isEmpty()) {
+			tail = null;
+			return removedList; // Ya terminamos
+		}
+		// Si eliminamos la cabeza y quedaron más elementos, el 'tail' no cambia aún.
+
+		// 2. Iterar por el resto de la lista para eliminar 3°, 5°, etc. (índices 2, 4,
+		// ...)
+		// Ahora 'head' apunta al elemento original en posición 2 (par)
+		// Necesitamos eliminar el que le sigue (posición 3 impar)
+		Node<E> prev = head; // Nodo en posición par (originalmente 2°, 4°, ...) - Se queda
+		Node<E> curr = head.getNext(); // Nodo en posición impar (originalmente 3°, 5°, ...) - A eliminar
+		int countRemovedFromLoop = 0;
+
+		while (curr != null) {
+			// a. Guardar el elemento impar a remover
+			removedList.addLast(curr.getElement());
+			countRemovedFromLoop++;
+
+			// b. Eliminar 'curr' (impar) enlazando 'prev' (par) con el siguiente de 'curr'
+			// (el próximo par)
+			Node<E> nextNode = curr.getNext();
+			prev.setNext(nextNode);
+
+			// c. Actualizar 'tail' si 'curr' era el último
+			if (nextNode == null) {
+				tail = prev; // El nodo 'prev' (par) es el nuevo último
+			}
+
+			// d. Avanzar punteros: 'prev' avanza al siguiente nodo par (nextNode)
+			prev = nextNode;
+			if (prev != null) {
+				// 'curr' avanza al siguiente nodo impar (el que sigue a prev)
+				curr = prev.getNext();
+			} else {
+				// Si prev es null, llegamos al final
+				curr = null;
 			}
 		}
-		while (walk2 != null) {
-			addLast(walk2.getElement());
-			walk2 = walk2.getNext();
-		}
+		// Size ya fue decrementado al quitar head, ahora ajustamos por los eliminados
+		// en el bucle
+		// size = size - countRemovedFromLoop; // ¡Ojo! Size se decrementó al inicio y
+		// se debe decrementar acá también
+		// Es más simple si solo decrementamos size cada vez que removemos
+		// (Ya decrementamos 1 al inicio). No necesitamos countRemovedFromLoop si
+		// hacemos size-- dentro del bucle.
+
+		// --- Código alternativo para actualizar size dentro del bucle ---
+		/*
+		 * while (curr != null) { removedList.addLast(curr.getElement()); Node<E>
+		 * nextNode = curr.getNext(); prev.setNext(nextNode); size--; // Decrementar
+		 * aquí por cada eliminación if (nextNode == null) { tail = prev; } prev =
+		 * nextNode; if (prev != null) { curr = prev.getNext(); } else { curr = null; }
+		 * }
+		 */
+		// --- Fin Código alternativo ---
+
+		return removedList;
 	}
 
+	// --- FIN: Método removeOdd REIMPLEMENTADO ---
+
+	/**
+	 * Retorna una nueva lista con los últimos n elementos de la lista original. No
+	 * modifica la lista original.
+	 *
+	 * Por ejemplo: Dada la lista {A, B, C, D} right(3) retorna la lista {B, C, D}
+	 * right(2) retorna la lista {C, D}
+	 *
+	 * @param n número de elementos a retornar comenzando desde la derecha.
+	 * @return nueva lista con los n elementos de la derecha.
+	 * @throws IndexOutOfBoundsException si n es negativo o mayor que el tamaño de
+	 *                                   la lista.
+	 */
+	public SinglyLinkedList<E> right(int n) throws IndexOutOfBoundsException {
+        // Validar n
+        if (n < 0 || n > size) {
+            throw new IndexOutOfBoundsException("El valor de n (" + n + ") está fuera de rango");
+        }
+
+		// 2. Crear la nueva lista a retornar
+		SinglyLinkedList<E> newList = new SinglyLinkedList<>();
+
+		// 3. Si n es 0, retornar la lista vacía
+		if (n == 0) {
+			return newList;
+		}
+
+		// 4. Encontrar el nodo desde donde empezar a copiar
+		Node<E> startNode = head;
+		int startIndex = size() - n;
+		for (int i = 0; i < startIndex; i++) {
+			startNode = startNode.getNext();
+		}
+
+		// 5. Copiar los n elementos desde startNode hasta el final
+		Node<E> current = startNode;
+		while (current != null) {
+			newList.addLast(current.getElement()); // addLast maneja head, tail y size de newList
+			current = current.getNext();
+		}
+
+		return newList;
+	}
+
+	// --- FIN: Métodos Añadidos para Parcial 2025 ---
 }
