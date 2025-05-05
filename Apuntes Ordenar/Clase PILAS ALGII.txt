@@ -1,0 +1,200 @@
+# Tipos Abstractos de Datos (TAD)
+
+Imagina que estás cocinando y necesitas un "recipiente para mezclar". No te importa *exactamente* de qué material está hecho (vidrio, metal, plástico) o su forma precisa, siempre y cuando cumpla su función: permitirte poner ingredientes dentro y mezclarlos.
+
+Un **Tipo Abstracto de Dato (TAD)** es exactamente eso en el mundo del software:
+
+1.  **Es una Abstracción:** Se enfoca en el **QUÉ** hace una estructura de datos, no en el **CÓMO** lo hace internamente. Define un conjunto de datos y las operaciones que se pueden realizar sobre esos datos.
+2.  **Es como un Contrato o Especificación:** Define qué operaciones están disponibles, qué hacen esas operaciones (qué entradas reciben y qué salidas producen) y qué comportamiento esperar (incluyendo posibles errores).
+3.  **Oculta los Detalles de Implementación:** No nos dice si los datos se guardan en un array, una lista enlazada, un árbol, etc. Eso se decide después, al *implementar* el TAD. Lo importante es la interfaz que ofrece al "mundo exterior".
+
+## ¿Por qué es útil un TAD?
+
+* **Modularidad:** Separa la definición del uso. Puedes cambiar la implementación interna de un TAD (por ejemplo, para mejorar la eficiencia) sin tener que cambiar todo el código que lo utiliza, siempre que la interfaz (las operaciones definidas) se mantenga igual.
+* **Reutilización:** Un TAD bien definido puede ser implementado y reutilizado en diferentes partes de un programa o en diferentes proyectos.
+* **Claridad Conceptual:** Ayuda a pensar en los problemas a un nivel más alto de abstracción antes de meterse en los detalles del código.
+
+## Relación con Goodrich
+
+Goodrich y otros autores de estructuras de datos enfatizan los TADs porque son la base para diseñar software robusto y mantenible. Primero defines el "contrato" (TAD), y luego eliges la "herramienta" adecuada (la estructura de datos concreta como un array, lista, etc.) para implementarlo eficientemente.
+
+## Ejemplo: Modelando un Sistema Simple de Gestión de Stock (como TAD)
+
+Vamos a refinar tu ejemplo viéndolo estrictamente como un TAD:
+
+* **Nombre del TAD:** `GestorDeStock`
+* **Datos que maneja (Conceptualmente):** Un conjunto de órdenes (pueden ser de compra o venta). No decimos *cómo* se almacenan, solo que existen.
+* **Operaciones Definidas (La Interfaz):**
+    * `comprar(producto, cantidad)`: Registra una orden de compra.
+    * `vender(producto, cantidad)`: Registra una orden de venta.
+    * `cancelar(orden)`: Anula una orden previamente registrada.
+* **Condiciones de Error (Parte del Contrato):**
+    * Al `comprar`/`vender`: Puede ocurrir un error si el `producto` no existe en el catálogo (o si al vender no hay stock suficiente, dependiendo de la lógica exacta que definas para el TAD).
+    * Al `cancelar`: Puede ocurrir un error si la `orden` a cancelar no existe o ya fue procesada/cancelada.
+
+**Lo clave aquí:** Esta definición del TAD `GestorDeStock` es una "plantilla conceptual". No dice si las órdenes se guardan en una `ArrayList`, un `HashMap`, una base de datos, o cualquier otra cosa. Simplemente define *qué se puede hacer* con el gestor de stock. Tu idea de que "sirve de modelo" es exactamente el propósito de un TAD.
+
+---
+
+# El TAD Pila (Stack)
+
+La Pila es uno de los TADs más fundamentales y sencillos de entender.
+
+## Concepto Principal y Datos
+
+* **Concepto Principal:** Imagina una pila de platos o libros. Solo puedes añadir un plato nuevo encima de la pila, y solo puedes quitar el plato que está arriba del todo. El último que pusiste (entró) es el primero que puedes sacar. Esto se llama **LIFO (Last-In, First-Out)**.
+* **Datos que maneja:** Almacena una colección de elementos (objetos) de forma ordenada según su llegada.
+
+## Operaciones
+
+### Operaciones Fundamentales:
+
+* `push(elemento)`: Añade un `elemento` a la cima (parte superior) de la pila. Es el "apilar".
+* `pop()`: Elimina y **devuelve** el elemento que está en la cima de la pila. Es el "desapilar". Si intentas hacer `pop` en una pila vacía, generalmente se produce un error (o se devuelve un valor especial como `null`, o se lanza una excepción, dependiendo de la implementación).
+
+### Operaciones Auxiliares (muy comunes):
+
+* `top()` (a veces llamado `peek()`): **Devuelve** el elemento de la cima de la pila **sin eliminarlo**. Permite "ver" cuál es el siguiente elemento a sacar. También puede generar un error si la pila está vacía.
+* `size()`: Devuelve el número de elementos que hay actualmente en la pila (un entero).
+* `isEmpty()`: Devuelve un valor booleano: `true` si la pila no contiene ningún elemento, `false` en caso contrario.
+
+## ¿Dónde se usa? (Aplicaciones Clave)
+
+* **Llamadas a Funciones/Métodos:** ¡Fundamental! Cuando un programa llama a una función (o método en Java), el sistema operativo (o la Máquina Virtual de Java) guarda la dirección de retorno y a veces los parámetros y variables locales en una Pila de Llamadas (Call Stack). Cuando la función termina, se hace `pop` para recuperar la dirección y volver al punto original.
+* **Recursividad:** Cada llamada recursiva se trata como una nueva llamada. Su estado se apila (`push`) en la Pila de Llamadas. Cuando una llamada recursiva termina, se desapila (`pop`) y se vuelve al estado de la llamada anterior. ¡Un exceso de llamadas puede causar `StackOverflowError`!
+* **Otras aplicaciones:**
+    * Verificar paréntesis/llaves/corchetes balanceados.
+    * Algoritmos de "vuelta atrás" (backtracking).
+    * Navegación "hacia atrás" (historial).
+    * Evaluación de expresiones matemáticas.
+
+## En Java
+
+Java tiene una clase `java.util.Stack` que implementa este TAD. Sin embargo, a menudo se prefiere usar la interfaz `java.util.Deque` con una implementación como `java.util.ArrayDeque`, ya que es más moderna y flexible (por ejemplo, `deque.push()`, `deque.pop()`, `deque.peek()`). Para empezar, `java.util.Stack` es fácil de usar.
+
+```java
+import java.util.Stack; // Importa la clase Stack
+
+// ... en tu código ...
+
+Stack<String> miPila = new Stack<>(); // Crea una Pila para Strings
+
+miPila.push("Primer elemento"); // ["Primer elemento"]
+miPila.push("Segundo elemento"); // ["Primer elemento", "Segundo elemento"]
+miPila.push("Tercer elemento");  // ["Primer elemento", "Segundo elemento", "Tercer elemento"]
+
+System.out.println("Tamaño: " + miPila.size()); // Output: Tamaño: 3
+System.out.println("Cima: " + miPila.peek());  // Output: Cima: Tercer elemento (sin quitarlo)
+
+String elementoSacado = miPila.pop(); // Saca "Tercer elemento"
+System.out.println("Saqué: " + elementoSacado); // Output: Saqué: Tercer elemento
+System.out.println("Nueva Cima: " + miPila.peek()); // Output: Nueva Cima: Segundo elemento
+
+System.out.println("¿Está vacía? " + miPila.isEmpty()); // Output: ¿Está vacía? false
+
+miPila.pop(); // Saca "Segundo elemento"
+miPila.pop(); // Saca "Primer elemento"
+
+System.out.println("¿Está vacía ahora? " + miPila.isEmpty()); // Output: ¿Está vacía ahora? true
+
+// Si intentas hacer miPila.pop() o miPila.peek() aquí, dará un error (EmptyStackException)
+
+
+
+## Interfaces vs. Implementación de la Pila
+
+Siguiendo la idea del TAD (Tipo Abstracto de Dato), en Java podemos definir una **Interfaz** para la Pila.
+
+* **¿Qué es la Interfaz?** Es el "contrato" que define qué operaciones *debe* tener cualquier clase que quiera comportarse como una Pila. Especifica los métodos obligatorios (`push`, `pop`, `top`, `size`, `isEmpty`), sus nombres, qué parámetros reciben y qué tipo de valor devuelven.
+* **¿Por qué usar una Interfaz?**
+    * **Abstracción:** Permite a quien *usa* la Pila interactuar con ella basándose solo en el contrato (la interfaz), sin preocuparse por *cómo* está implementada por dentro (si usa un array, una lista enlazada, etc.).
+    * **Flexibilidad:** Diferentes clases pueden *implementar* la misma interfaz `Stack` de maneras distintas (por ejemplo, una `ArrayStack` más rápida para ciertas operaciones, una `LinkedStack` que maneja mejor el crecimiento dinámico). Puedes cambiar la implementación concreta sin alterar el código que usa la interfaz.
+
+## Interfaz Java Propuesta para el TAD Pila
+
+Esta es una definición típica de una interfaz `Stack` en Java, usando genéricos (`<E>`) para que pueda funcionar con cualquier tipo de elemento (`E`). **Importante:** Esta interfaz específica (basada en tus notas/curso) define un comportamiento particular para `pop()` y `top()` en pilas vacías, que es diferente al de la clase `java.util.Stack` incorporada.
+
+```java
+/**
+ * Interfaz para el Tipo Abstracto de Dato Pila (Stack).
+ * Utiliza genéricos para permitir pilas de cualquier tipo de objeto.
+ *
+ * @param <E> el tipo de elemento almacenado en la pila
+ */
+public interface Stack<E> {
+
+    /**
+     * Devuelve el número de elementos en la pila.
+     * @return número entero de elementos.
+     */
+    int size();
+
+    /**
+     * Comprueba si la pila está vacía.
+     * @return true si la pila no tiene elementos, false en caso contrario.
+     */
+    boolean isEmpty();
+
+    /**
+     * Devuelve el elemento en la cima de la pila sin quitarlo.
+     * **Comportamiento específico:** Devuelve null si la pila está vacía.
+     * @return el elemento de la cima, o null si está vacía.
+     */
+    E top();
+
+    /**
+     * Inserta un elemento en la cima de la pila.
+     * @param element el elemento a insertar.
+     */
+    void push(E element);
+
+    /**
+     * Elimina y devuelve el elemento en la cima de la pila.
+     * **Comportamiento específico:** Devuelve null si la pila está vacía.
+     * @return el elemento eliminado, o null si la pila estaba vacía.
+     */
+    E pop();
+}
+
+
+------El metodo Stack en la JVM
+-- la JVM realiza seguimiento de la cadena de metodos activos con una pila (PC - program counter)
+-- Cuandos e llama un metodo, la JVM empuja sobre la pila un frame
+-- Variables locales y valores de retodno , contador de PRograma)
+--Cuando un metodo termina, su frame se desapila de la pila y el control se pasa al metodo enel tope de la pila
+----- LA GRAN DIFERENCIA CON OTROS LENGUAJES, es que la JVM atiende los programas por eso se cuentan instrucciones de java
+--- Ahora si hay sistemas en tiempo real muy acotados en tiempos, igual se puede en general permitir el tiempo que se pierde en compilar , y por eso a veces igual se utilizan lenguajes interpretados, y favorecer la portabilidad.
+--- C es "portable" porque el compilador hace que funcione en esa maquina específica
+
+
+### pila basada en arreglos
+	Una forma simple es usar un arreglos
+	Agrego elementos de izquierda a derecha
+	una variable mantiene el seguimiento del elemento superior
+	
+	si no me alcanza por ejemplo un arreglo de 100 elementos, hago uno mas grande, copio todo lo que tenia y libero el espacio anterior (en c el programador con free y en java el garbage collector)
+	estariamos haciendo un array dinamico , pero tiene un problema de eficiencia, ya que cada vez q quiero expandir tengo que copiar todo
+	el uso de pila tambien tiene un costo, que es agregar referencias a los nodos, por eso a veces se puede evaluar el uso de arreglos.
+	Cuando empujo y esta lleno, se puede usar FullStackException  (un if t= S.lenght then trow IllegalStateException 
+	
+Performance vs Limitaciones
+	• Performance
+– Sea n el número de elementos de la pila
+– El espacio usados es O(n)
+– Cada operación corre en O(1)
+• Limitaciones
+– El tamaño máximo de la pila se define apriori y no se
+puede cambiar
+– Intentar empujar un nuevo elemento con la pila llena
+causa un excepción específica de la implementación
+
+
+si hacemos un arreglo de objetos genericos en g, usamos el constructor de Object , tenemos una direccion de memoria que es solo eso, y puede ser cualqeuir tipo de objeto
+Al definirlo generico tenemos que definir algunos metodos de manera que funcionen para cualquier tipo de dato.
+por ejemplo uso idnirecto de pila, es para hacer el reverso de un arreglo de numeros enteros.
+
+
+----------- HAY UN PATRON DE DISEÑO --> ADAPTADOR
+	# el patron de diseño adaptador se aplica a cualqueir contexto en el que modifcamos una clase existente
+	
+	
