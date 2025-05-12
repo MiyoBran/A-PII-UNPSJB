@@ -1,0 +1,98 @@
+AdC - Ley de Amdahl
+Es muy importante y tarea del programador permitirle al programa que pueda utilizar mas de un nucleo, para asi aumentar el rendimiento
+con el paradigma de programacion paralela.
+
+Nos ayuda a determinar la aceleracion de la ejecucion de un programa si disponemos de mayor cantidad de nucleos -> se genera un apaisado en el grafico en 512 nucleos?
+
+
+Tipos de conexiones fisicas que tienen los nucleos entre si
+Hay opciones lineal - anillo - arbol - cuadricula - completo
+En general no nos afecta en la mayoria de las decisiones como programador
+
+
+TAXONOMIA DE FLYNN
+
+Se basa en el numero de unidades de control y de procesamiento disponibles en la pc
+se divide en 4 tipos:
+
+	● Flujo de instrucciones simple (SI): La arquitectura tiene una única unidad de
+control que produce un único flujo de instrucciones
+	● Flujo de instrucciones múltiple (MI): La arquitectura tiene múltiple unidades de
+control, cada una produciendo un flujo distinto de instrucciones
+		● Flujo de datos simple (SD): Sólo hay un procesador que ejecuta un único flujo
+de datos
+	● Flujo de datos múltiple (MD): Hay varios procesadores, cada uno de ellos ejecutando un flujo de datos distinto.
+
+
+● SISD. Los sistemas monoprocesadores  -> Procesadores comunes
+Representa la arquitectura clasica Von Neuman. Las instrucciones se ejecutan secuencialmente , aunque pueden estar solapadas sus etapas de ejecucion.
+Puede tener mas de una unidad funcional pero bajo la supervision de una unica unidad de control. 
+Si hay Particion de tareas entre nucleos, esto no lo hace el procesador sino el programador. SIno 1 instruccion, con 1 dato,. Simple Instruccion , Simple Dato (SISD)
+
+●SIMD. La misma instrucción se ejecuta en varios procesadores sobre datos distintos.Cada procesador tiene su propia memoria de datos, pero la memoria para almacenar
+las instrucciones y la unidad de control son únicas. Ej: procesadores vectoriales -> GPU
+SimpleInstruccion, Multiples Datos (SIMD) , Muchas ALU bajo la supervicion de la misma Unidades de Control (UC). Todos los procesadores reciben la misma instruccion.
+Las placas de video estan hechas para operar con matrices (las placas de video tienen miles de cores, aunque de menos poder que el del procesador) 
+
+
+●MISD. No se ha construido ninguna arquitectura comercial. 
+Multiples Instrucciones, Simples Datos (solo teorica)
+Hay n procesadores, cada uno recibe una instrucción diferente pero operan sobre el mismo conjunto de datos. La salida de un procesador es la entrada del siguiente. No hay ninguna máquina que siga esta política.
+
+
+●MIMD. Cada procesador agarra sus instrucciones y opera con sus propios datos - diferente(Multiple procesadores Multiples Datos) -> Clusters  - multiples computadoras que actuan como una sola
+Sistema de computadoras capaz de procesar múltiples programas al mismo tiempo
+• Una memoria compartida entre n elementos de proceso.
+• La mayoría de los sistemas de multicomputadoras y  	multiprocesadores pueden clasificarse en esta categoría
+
+Coherencia de la Memori Cache
+Las Soluciones se dividen en dos grandes grupos
+SOFTWARE
+• El compilador o programador clasifica cada elemento como
+COMPARTIDO o NO COMPARTIDO
+• Coloca los tipos de datos COMPARTIDOS en un segment separado.
+• Al tiempo de ejecucion se deshabilita a la cache para el acceso a dicho segmento.
+HARDWARE
+• Se diseña el controlador de la cache para que pueda monitorear el BUS.
+
+
+--------------
+Caches de Intervención. Protocolo de una sola escritura -> los datos pueden ser Validos, Invalidos o Sucios, dependiendo si estan correctos, Desfazados (quedo viejo el dato) o si lo modifico pero no "aviso" a la memoria compartida.
+
+Con Etapas Múltiples. Interruptores Cruzados   -> Los modulos de Memoria son por ejemplo, los que componen la Ram (la ram es un conjunto de chips de memoria DIMM o So-DIMM)
+• Un BUS tiene capacidad limitada y fija.
+• Los BUSES no se adaptan para sistemas grandes.
+• Límite práctico en 64 procesadores ?. (ESTO ES MUY CHICO; YA QUE ESTAMOS PENSANDO EN SUPERCOMPUTADORAS)
+• SOLUCION : Dividir la memoria en módulos y proporcionar trayectorias entre las CPU y los módulos. --> Mapa de ROOTEO de procesadores, dinamico.  /// REDES OMEGA , para evitar colisiones
+
+ARQUITECTURA COW (Cluster of Workstation)
+Cada computadora del cluster se denomina NODO. A nivel Logico actuan en conjunto. Todas las pcs con la misma  version del mismo sistema operativo (funciona como MIDDLEWARE), se hace un archivo de texto de configuracion conlas IPS de los otros nodos
+y ya se puede utilizar . DOCKER con QNAP se pueden crear clusters para mandar al nodo mas ocioso.
+
+Clasificación de los clusters
+– Según la aplicación
+• Clusters de alto rendimiento: diseñados para la implementación deaplicaciones de alto coste computacional.(cuando lo importante es la velocidad de respuesta)
+
+Para programacion en CLuster  de alto rendimiento --> Biblioteca MPI , si programamos usando esta biblioteca, se pueden dividir los datos en partes y de esta manera al compilar y ejecutar con MPI run.
+
+
+• Clusters de alta fiabilidad: diseñado para aplicaciones críticas, en las que lo importante es la disponibilidad más que el rendimiento. (Cuando lo importante es la seguridad del dato, se multiplica el trabajo y se repite en cada nodo)
+– Según el propietario de los nodos
+• Clusters dedicados: las aplicaciones paralelas se ejecutan en todo el sistema, sin ningún tipo de restricción.
+• Clusters no dedicados: cada nodo tiene un propietario y las aplicaciones paralelas se ejecutan en el tiempo en que los nodos están ociosos (ciclos libres).
+• Clusters homogéneos: la arquitectura (hardware y misma.
+• Clusters heterogéneos: los nodos tienen diferentes características, en cuanto a hardware o software  -> SETI de Berkeley , permitia  a los usuarios contribuir  en la investigacion , al descargar una aplicacion que funcionaba como protector de pantalla
+
+Arquitectura de un cluster
+• Las computadoras se conectan a través de una red de área local (LAN) de alta velocidad o mediante un conmutador
+• Cada computadora puede trabajar de forma independiente
+• En cada computadora se instala una capa software intermedia (middleware) que permite el funcionamiento de todas las computadoras como un único cluster , o MPI
+• El middleware del cluster proporciona al usuario una imagen unificada conocida como Imagen de Sistema único (singlesystem image)
+• El middleware proporciona alta disponibilidad, distribuyendo la carga y respondiendo a los fallos de los componentes
+
+
+--- Por ejemplo se puede armar un COW juntando muchas pcs viejasm, a todas les ponemos el mismo linux, y tenemos un cluster . La transferencia permanente de datos, relentiza todo, ya que el cuello de botella esta en general en la RED
+--> Los datacenter utilizarn otro tipo de configuracion, son otro tipo de configuracion y estructura
+
+
++++++++ Importante , entra en el Parcial -> LEY DE AMDHAL.
