@@ -112,3 +112,21 @@ Implementación de Positional List
 			**Iterator(): Devuelve un iterador de los elementos de la colección.
 			**Una instancia de una clase de colección típica en Java, como ArrayList, es iterable (¡pero no es un iterador!); Produce un iterador para su colección como valor de retorno al invocar el método iterator().
 			**Cada llamada a iterator() devuelve una nueva instancia de iterador, permitiendo así recorridos múltiples (incluso simultáneos) de una colección.
+			
+			
+SI QUIERO PROVEER un iterador, para mi CLASE, DEBO CREAR/Proveer la clase privada (inner class) ITERATOR, la clase con los metodos para recorrer
+	public class ArrayIterator<E> implements Lists<E>{
+	// nuestra lista implementada con un arreglo, con todos nuestros metodos
+	
+	}
+
+	// TIENE QUE RESPETAR LA ESTRUCTURA DE UN ITERADOR PORQUE IMPLEMENTA ITERATOR, 
+	private class ArrayIterator implements Iterator<E>{
+		// aca definimos los atributos internos privados j= posicion inicial , boolean removable = false -> para poder implementar remove()cuando queda en true
+		
+		// provee un metodo publico, que devuelve una instancia del iterator, esto se hace para poder "acceder" a todo lo privado de la clase privada ArrayIterator
+		piblic Iterator<E> iterator(){
+		 return new ArrayIterator();
+		}
+	
+	}

@@ -1,0 +1,236 @@
+Arboles - A&PII
+
+Un árbol T es un conjunto de nodos que almacenan elementos tal que los nodos tienen una relación padre-hijo que satisface las siguientes propiedades:
+– Si T no es vacío, este tiene un nodo especial llamado raíz de T, este no tiene padre.
+– Cada nodo v de T diferente del raíz tiene un único nodo padre w; cada nodo con padre w es un hijo de w.
+• En informática, un árbol es un modelo abstracto de una estructura jerárquica
+• Aplicaciones:
+– Gráficos organizacionales
+– Sistemas de archivos
+– Entornos de programación
+
+Terminología de árboles
+
+• Raíz: nodo sin padre (A)   --> Es UNICO
+• Nodo interno: nodo con al menos un hijo (A, B, C, F)
+• Nodo externo (hoja): nodo sin hijos (E, I, J, K, G, H, D)  ----> No se puede formar subArbol , ya que no tienen descendientes.
+• Ancestros de un nodo: padre, abuelo, bisabuelos,etc.
+• Profundidad de un nodo: número de ancestros
+• Peso de un árbol: máxima profundidad de nodos (En el ejemplo es 3, no se cuenta la raiz)
+• Descendientes de un nodo: hijo, nieto, bisnieto, etc.
+• Subarbol: árbol consistente de un nodo y sus descendientes
+
+* El Arco Une dos nodos (abajo definicion mas precisa) , 
+*Un camino une nodos , por lo tanto si existe el camino ascendente que los une, A y B estan relacionados Jerarquicamente.
+
+Diremos arco (edge) del árbol T dado un par de nodos (u, v) tales que u es el padre de v, o viceversa, que los une. Y camino (path) de T es una secuencia de nodos tal que cualesquiera dos nodos
+consecutivos en la secuencia forman un arco.
+
+ARBOL ORDENADO ---> LIBRO : esta ordenado por secciones, las secciones en capitulos , subcapitulos, y eso en parrafos
+Un indice es mas eficiente si usamos una estructura de arbol, en vez de organizarlo como un arreglo de links por ejemplo
+ 
+En matematica discreta es una relacion de conjunto parcialmente ordenado?
+*****************************************
+##TAD árbol
+Definimos un TAD árbol utilizando el concepto de posición como una abstracción para un nodo de un árbol. Se almacena un elemento en cada posición y las posiciones satisfacen las relaciones padre-hijo que
+definen la estructura del árbol. Un objeto posición (position) para un árbol soporta los métodos:
+
+• Métodos de acceso:
+• getElement( ) retorna el elemento almacenado en la posicion.
+– position root()  -> referencia a la direccion de memoria
+– position parent(p)
+– Iterable children(p)  --A> una interface que o generica o implementada por nosotros, nos permite determinar quienes son los hijos
+– Integer numChildren(p)
+• Métodos genéricos:
+– integer size()
+– boolean isEmpty()
+– Iterator iterator()
+– Iterable positions()   --> termina en able, es una interface  - tenemos que definirlos nosotros si no estan por defecto , por ejemplo podramos hacer uno para "hermanos" que son los que
+comparten el mismo nivel y tienen un ancestro comun. Por lo tanto la posicion anterior o siguiente se define segun la implementacion que hayamos hecho
+• Métodos de consulta:
+– boolean isInternal(p)
+– boolean isExternal(p)
+– boolean isRoot(p)
+• Métodos de actualización adicionales se pueden definir para las estructuras de datos que implementan el TAD árbol
+
+Interfaz Java: (la definimos para tener terminologia comun cada vez que se utiliza un arbol
+public interface Tree <E> extends Iterable<E>{
+	Position<E> root();
+	Position<E> parent(Position<E> p) throws IllegalArgumentException;
+	Iterable <Position<E>> children (Position <E> p) throws IllegalArgumentException;
+	
+	int numChildren(Position<E> p) throws IllegalArgumentException
+	
+	boolean isInternal (Position<E> p) throws IllegalArgumentException
+	boolean isExternal (Position<E> p) throws IllegalArgumentException
+	boolean isRoot (Position<E> p) throws IllegalArgumentException
+		
+	int size();
+	boolean isEmpty();
+	Iterator <E> iterator();   // como implementamos Iterable, estamos obligados a implementar este metodo que es el unico que tiene
+	Iterable <Position<E>> positions(); 
+
+}
+
+
+
+
+************************
+Cálculo de profundidad y altura de un árbol
+
+• Sea p una posición dentro del árbol T. La profundidad de p es el número de antepasados de p, distintos de p.
+– Si p es la raíz, entonces la profundidad de p es 0.
+– De lo contrario, la profundidad de p es uno más la profundidad del padre de p.
+• Y, definimos la altura de un árbol como igual al máximo de las profundidades de sus posiciones (o cero, si el árbol está vacío).
+• Nota: ver códigos pág. 314, 315 y 316.
+
+***************************
+Arboles binarios
+• Propiedades:
+– Cada nodo interno tiene como máximo dos hijos
+– Los hijos de un nodo son de orden par
+- La busqueda al dividir siempre a la mitad, divide el problema a la mitad
+• Llamamos a los hijos de un nodo interno Hijo-izquierdo e Hijo-derecho
+• Aplicaciones:
+– Expresiones aritméticas  (hay precedencia, y hay siempre dos operandos)
+– Procesos de decisión
+– búsquedas
+
+
+###Árbol de expresiones aritméticas
+• Nodos internos: operadores
+• Nodo externos: operandos
+• Ejemplo: árbol de expresión aritmética para (2 × (a - 1) + (3 × b))
+
+Arbol de decisión
+• Nodos internos: preguntas con respuesta si/no
+• Nodos externos: decisiones
+• Ejemplo: decisión de salir a comer
+
+
+###Propiedades de los árboles binarios
+• Notación:
+– n número de nodos
+– e número de nodos
+externos
+– i número de nodos
+internos
+– h altura
+
+
+#### Propiedades:  ( buscar deficiones mas amplias)  ---> nos permite usarlas el hecho de que sea binario
+–e=i+1
+– n = 2e - 1
+–h≤i
+– h ≤ (n - 1)/2
+– e ≤ 2h
+– h ≥ log2 e
+– h ≥ log2 (n + 1) - 1
+
+
+----> uN arbol puede estar o no balanceado(degenerado - Se convierte en una lista de nodos internos), si esta balanceado, al hacer una eleccion dividimos el problema a la mitad.
+Los arboles tienen el problema de que se Desbalancean
+La eleccion de la raiz tiene mucho que ver, y el orden de carga del arbol es principalmente lo que me balancea o desbalancea el arbol
+
+Para esto hay metodo de Balanceo , que ademas nos permite mantener la complejidad logaritmica
+
+
+*******************************
+##Definición recursiva de un árbol binario
+• un árbol binario es:
+– Un árbol vacío.
+– Un árbol no vacío que tiene un nodo raíz r, que almacena un elemento y dos árboles binarios que
+son respectivamente los subárboles izquierdo y derecho de r.
+• Nota: uno o ambos de esos subárboles pueden estar vacíos según esta definición.
+
+## El TAD árbol binario
+• Hereda del TAD árbol 
+• Método adicionales:
+– position left(p)
+– position right(p)
+– position sibling(p)    // Hermano
+• Ver códigos pag. 319-320
+
+• Los métodos anteriores devuelven null cuando no hay a hijo izquierdo, derecho o hermano de de p, respectivamente
+
+• Los métodos de actualización se pueden definir por estructuras de datos que implementan el TAD árbol binario
+Hay 3  maneras principales de recorrer un arbol-PreOrden  - InOrder - PostOrder
+
+Matriz para memotecnia
+
+Pre : 		RID
+IN:    		IRD
+POST: 	IDR
+
+
+##Recorrido PreOrden
+• Un recorrido visita de manera sistemática los nodos de un árbol
+• En un recorrido preOrden, un nodo se visita antes que sus descendientes
+• Aplicación: imprimir un documento estructurado
+
+##Recorrido Enorden
+• Un recorrido enOrden (inorder traversal) un nodo se visita luego del subárbol izquierdo y antes que el subárbol derecho
+• Aplicación: Dibujar un árbol binario
+– x (v) = rango de orden de v
+– y (v) = profundidad de v
+
+** Impresión de expresiones aritméticas
+• Especialización del
+recorrido enOrden
+– Imprimir operando u
+operador cuando se
+visita el nodo
+– Imprimir “(“ antes de
+recorrer el subárbol
+izquierdo
+– Imprimir “)“ luego de
+recorrer el subárbol
+derecho
+
+##Recorrido PostOrden
+
+• Un nodo se visita luego de sus
+descendientes
+• Aplicación: El espacio utilizado
+en una computadora por
+archivos, carpetas y
+subcarpetas
+
+
+**************************
+## Implementación: Estructura enlazada
+
+• Un nodo se representa por
+un objeto que almacena:
+– Elemento
+– Nodo padre
+– Secuencia de nodos hijos
+• Los objetos de nodo
+implementan el TAD posición
+
+
+Estructura enlazada para árboles binarios
+
+• Un nodo se presenta por un
+objeto que almacena:
+– Elemento
+– Nodo padre
+– Nodo hijo izquierdo
+– Nodo hijo derecho
+• Los objetos nodo implementan
+el TAD Position
+
+******************
+Representación de árboles binarios
+con arreglos
+
+• Los nodos se almacenan
+en un arreglo A
+El nodo v se almacena en A[rank(v)]
+• rank(root) = 0
+• Si el nodo es el hijo izquierdo del
+parent(node), rank(node) = 2 ⋅
+rank(parent(node)) + 1
+• Si el nodo es el hijo derecho del
+parent(node), rank(node) = 2 ⋅
+rank(parent(node)) + 2
