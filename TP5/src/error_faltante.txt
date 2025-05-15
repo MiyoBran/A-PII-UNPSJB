@@ -1,0 +1,3 @@
+public class Test {
+    public void metodo() { // Llave abierta
+        System.out.println("Hola");

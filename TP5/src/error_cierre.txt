@@ -1,0 +1,6 @@
+public class Test {
+    public void metodo() {
+        if (true)) { // Cierre extra
+        }
+    }
+}
