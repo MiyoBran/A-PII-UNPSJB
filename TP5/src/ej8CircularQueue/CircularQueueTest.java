@@ -1,4 +1,4 @@
-package Ej8;
+package ej8CircularQueue;
 
 import net.datastructures.CircularQueue;
 
