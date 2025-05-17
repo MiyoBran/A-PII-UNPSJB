@@ -1,0 +1,132 @@
+ALGII - Listas e Iteradores
+
+Es una vuelta mas de recorrer colecciones. Sin exponer los datos
+
+arreglos vs listas enlazadas:
+	- Cuando elegimos un TAD, definimos una estructura general, damos una definicion teorica, que se puede dar incluso en pseudocogio
+	- pero la implementacion requiere toma de decisiones y el trabajo real de programacion
+	-Dada la propia naturaleza de cada implementación de lista es difícil diseñar una abstracción única
+	-Sin embargo Java define una interfaz general basada en métodos con índice (salvo que veamos una falla en la implementacion para lo que ya tenemos
+	-Extendiendo la clase de java, (Por herencia : implementamos los que nos sirve, sacamos lo que no nos sirve, y hacemos overrride de lo que queremos cambiar)
+	
+El TAD java.util.List : 
+	-La interface (no interface de java )es la manera para intercatuar con los miembros de una clase (atributos y metodos), los miembros publicos y protegidos de la clase a los que yo como cliente tengo acceso. Cualquier metodo o clase que por herencia.
+	-EL contrato del algoritmo implica lo que tengo que asegurar que mi algoritmo hace. Esto tiene que estar documentado. LA definicion del tipo abstracto de datos probablemente cumple el contrato, y el usuario no necesariamente se interesa por la implementacion, que es responsabilidad del programador (en la implementacion)
+	-En contraste el interface, que provee java, es lo que estamos Obligados a implementar en las subclases. para que no sea abstracta. Nos permite acceder a documentaciony tratamiento unificado.
+	
+	Esta interface incluye los siguientes metodos:
+		*size():
+		*isEmpty():
+		*get(i): 
+		*set(i,e):
+		*add(i,e):
+		*remove(i):
+	
+-> ARRAYLIST
+	*Una opción obvia para implementar este TAD lista es usar un arreglo, A, donde A[i] almacena (una referencia a) el elemento con índice i.
+	*Con una representación basada en un arreglo A, los métodos get(i) y set(i, e) son fáciles de implementar accediendo A[i] (suponiendo que i es un índice legítimo).
+	
+	Inserción
+		En la operación add(i, o), necesitamos hacer un lugar para el nuevo elemento desplazando hacia adelante los n – i elementos A[i],…, A[n - 1]
+		En el peor caso (i = 0), toma O(n) veces (porque ya sabemos que se recorre el array con un bucle, de complejidad lineal)
+	
+	Eliminar un elemento
+		En una operación remove(i), necesitaremos llenar el hueco  de la izquierda producto del elemento eliminado desplazando hacia atrás los n - i – 1 elementos A[i + 1], …, A[n - 1]
+		En el peor caso (i = 0), toma O(n) veces ( al igual que la insercion de un elemento en una posicion ocupada, recorremos el elemento con algun bucle, por lo tanto complejidad lineal)
+		
+		
+	Performance
+		Implementación de lista dinámica basada en un arreglo:
+			El espacio usado por los datos es O(n) - La memoria crece linealmente
+			Indexar un elemento es O(1) - Es constante ya que si instertamos sin desplazar, es una instruccion 
+			add y remove ejecuta en O(n) - Ya vimos que es lineal por el bucle del dezplazamiento
+			En una operación add , cuando el arreglo está lleno, en lugar de lanzar una excepción o null lo podemos reemplazar por uno de mayor tamaño.  - Con esto damos una solucion (no se puede agrandar, sino 
+			
+			Recordar que el array lo que tiene es Referencia a los Objetos reales (son direcciones de memoria) -> entonces cuando creamos el nuevo arreglo B , que va a tener esas mismas referencias en la primer parte
+			Definimos un arreglo del doble de tamaño(pero podria ser +10% +50%, para que perdure y no tener que hacerlo cada vez, pero la consecuencia es uso de memoria cuadratico en el peor caso.
+	Concepto Growable (expandible) array list basada en arreglo
+		Dada la operación push(o) que agrega un elemento al final de la lista :
+		Cuando el arreglo está lleno, lo reemplazamos por uno más largo
+		¿Cuanto de largo?
+		Estrategia Incremental: se incrementa un tamaño constante c
+		Estrategia de duplicación: el doble del tamaño
+	Comparación de estrategias
+		Comparemos la estrategia incremental y la de duplicación analizando el tiempo total T(n) necesario para ejecutar una serie de n operaciones push 
+		De esta manera, hay muchas operaciones de inserción simples para cada una de las costosas (las de duplicar el arreglo). Este hecho nos permite mostrar que una serie de operaciones push en un arreglo dinámico inicialmente vacío es eficiente en términos de su tiempo total de ejecución.
+		Asumimos que iniciamos con una lista vacía representado por un arreglo creciente de tamaño 1
+		Llamamos tiempo amortizado de una operación push, al promedio de tiempo que toma
+	una operación push sobre la serie de operaciones, ej.,  T(n)/n
+
+Clase 12/5
+	Positional List
+	Un documento de texto puede verse como una larga secuencia de caracteres. 
+		Un procesador de texto utiliza la abstracción de un cursor para describir una posición.
+		Sin el uso explícito de un índice entero, lo que permite operaciones como "eliminar el carácter en el cursor" o "insertar un nuevo carácter justo después del cursor".
+		Además, es posible que podamos referirnos a una posición inherente dentro de un documento, como el comienzo de un capítulo en particular, sin depender de un índice de caracteres (o incluso un número de capítulo) que puede cambiar a medida que evoluciona el documento.
+		
+	TAD lista de posiciones: proporciona una abstracción general de una secuencia de elementos con la capacidad de identificar la ubicación de un elemento.
+		Una posición actúa como un marcador o token dentro de una lista de posición más amplia.
+		Una posición p no se ve afectada por cambios en otra parte de una lista; la única manera en que una posición se convierte en no válida es si se emite un comando explícito para eliminarlo.
+		Una instancia de posición es un objeto simple, que sólo admite el siguiente método:
+		P.getElement (): Devuelve el elemento almacenado en la posición p.
+		
+		
+   Métodos de acceso:
+   first()=
+   last()=
+   before(p)=
+   after(p)=
+   isEmpty()=
+   size()=
+   
+   
+   
+   Métodos de actualización:
+		addFirst(e)=
+		addLast(e)=
+		addBefore(p,e)=
+		addAfter(p,e)=
+		set(p,e)=
+		remove(p)=
+		
+Implementación de Positional List
+	*La forma más natural es con una lista doblemente enlazada
+		- Inserción: Inserta un nodo nuevo, q, entre p y su sucesor
+		- Eliminación= Elimina un nodo, p, de la lista doble enlazada
+	* Implementacion con arreglo
+		- Recuerde que las posiciones en una lista posicional siempre deben definirse en relación con sus posiciones vecinas, no con sus índices
+		
+**** Iterators (iteradores)  ---> PATRON DE DISEÑO ITERADOR
+	*Un iterador es un patrón de diseño de software que abstrae el proceso de recorrido (scanning), de a un elemento a la vez, a través de una secuencia de elementos.
+	*java.util.Iterator está definida la interfaz:
+	hasNext()=returns true if there  is at least 1 additional element  in the secuence , otherwise false
+	next()= Returns the next element in the secuence
+	
+	
+	Es soportado por algunos iteradores el método:  remove()= removes from the collection the element returned by the most recent call to next
+		*Si no se admite la eliminación, se genera una excepción UnsupportedOperationException.
+		* En este curso trataremos de no usar este método
+		
+	**La interfaz Iterable , todo slos able , ible son interfaces
+			**Java define una interfaz parametrizada, denominada Iterable, que incluye el siguiente método único:
+			**Iterator(): Devuelve un iterador de los elementos de la colección.
+			**Una instancia de una clase de colección típica en Java, como ArrayList, es iterable (¡pero no es un iterador!); Produce un iterador para su colección como valor de retorno al invocar el método iterator().
+			**Cada llamada a iterator() devuelve una nueva instancia de iterador, permitiendo así recorridos múltiples (incluso simultáneos) de una colección.
+			
+			
+SI QUIERO PROVEER un iterador, para mi CLASE, DEBO CREAR/Proveer la clase privada (inner class) ITERATOR, la clase con los metodos para recorrer
+	public class ArrayIterator<E> implements Lists<E>{
+	// nuestra lista implementada con un arreglo, con todos nuestros metodos
+	
+	}
+
+	// TIENE QUE RESPETAR LA ESTRUCTURA DE UN ITERADOR PORQUE IMPLEMENTA ITERATOR, 
+	private class ArrayIterator implements Iterator<E>{
+		// aca definimos los atributos internos privados j= posicion inicial , boolean removable = false -> para poder implementar remove()cuando queda en true
+		
+		// provee un metodo publico, que devuelve una instancia del iterator, esto se hace para poder "acceder" a todo lo privado de la clase privada ArrayIterator
+		piblic Iterator<E> iterator(){
+		 return new ArrayIterator();
+		}
+	
+	}
