@@ -1,5 +1,6 @@
 package tp5.Ej9;
-import net.datastructures.Deque;
+
+import net.datastructures.*;
 
 /**
  *  Trabajo Práctico N°5 - Algorítmica y Programación II (UNPSJB)

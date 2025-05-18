@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ar.edu.tuuniversidad.ayp2</groupId> <artifactId>tp1-algoritmos</artifactId>   <version>0.0.1-SNAPSHOT</version>
+    <groupId>ar.edu.unpsjb.ayp2</groupId> <artifactId>tp1-algoritmos</artifactId>   <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging> <name>TP1 - Algoritmica y Programacion II</name> <description>Ejercicios del Trabajo Practico 1 - Migracion Conocimientos C a Java</description>
 
     <properties>

@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/datastructures"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/datastructures-library"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

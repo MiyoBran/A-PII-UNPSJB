@@ -3,7 +3,7 @@ package ej11Supermercado;
 
 // Importa tu DoublyLinkedDeque y la interfaz Deque de net.datastructures
 import ej10DoublyLInkedDeque.DoublyLinkedDeque; // O la ruta/paquete donde esté tu implementación
-import net.datastructures.Deque;                // La interfaz que implementa tu DoublyLinkedDeque
+import net.datastructures.Deque;
 
 import java.util.List; // Para el parámetro clientesCompletados
 

@@ -1,5 +1,6 @@
 package tp5.Ej1;
 
+
 import net.datastructures.*;
 
 public class DoublyLinkedStack<E> implements Stack<E> {
