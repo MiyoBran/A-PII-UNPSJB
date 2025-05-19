@@ -2,8 +2,6 @@
 
 **2\. Guía/Tutorial para Configurar el Entorno y los Proyectos**
 
-Aquí tienes un borrador de la guía que puedes exportar y refinar. Está pensada para alguien (¡incluido tu yo del futuro\!) que necesite configurar el entorno desde cero para trabajar en tus proyectos.
-
 ## ---
 
 **Guía de Configuración del Entorno de Desarrollo: Proyecto A-PII-UNPSJB**
