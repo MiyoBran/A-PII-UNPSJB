@@ -115,3 +115,13 @@ Antes de comenzar, asegúrate de tener instalados los siguientes componentes:
 
 ---
 
+Agregar new Software
+SonarLint
+https://eclipse-uc.sonarlint.org/
+
+Maven-m2e - Update Repositorio
+Maven-m2e	https://download.eclipse.org/technology/m2e/releases/latest	Enabled
+
+Spring Tools for Eclipse	https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/e4.35/	Enabled
+https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/e4.36/
+https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/latest/

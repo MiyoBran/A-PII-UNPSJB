@@ -1,5 +1,7 @@
-package ej06HTMLCheckerApp;
+package ej01StackPerformance;
 
+import net.datastructures.DoublyLinkedList;
+import net.datastructures.Stack;
 
 
 public class DoublyLinkedStack<E> implements Stack<E>, Cloneable  {
@@ -28,7 +30,6 @@ public class DoublyLinkedStack<E> implements Stack<E>, Cloneable  {
 
 	@Override
 	public E top() {
-		// TODO Auto-generated method stub
 		if (isEmpty()) return null;
 		return list.last();
 	}

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import net.datastructures.Deque;
 
-public class TestDequeRemoveLast {
+public class DequeRemoveLastTest {
 
 	// addLast y removeFirst implementaci�n libro
 

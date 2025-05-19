@@ -7,7 +7,7 @@ import net.datastructures.CircularQueue;
  * Demuestra todas las operaciones importantes y muestra el estado de la cola
  * después de cada operación.
  */
-public class CircularQueueTest {
+public class PruebaCircularQueue {
     
     public static void main(String[] args) {
         // Crear una cola circular con capacidad inicial de 5

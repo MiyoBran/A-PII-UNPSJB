@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * ✔ Detecta EmpleadoBaseMasComision y aplica un 10% extra.
  * 
  */
-public class TestEmpleados {
+public class PruebaEmpleados {
     public static void main(String[] args) {
         ArrayList<Empleado> empleados = new ArrayList<>();
 

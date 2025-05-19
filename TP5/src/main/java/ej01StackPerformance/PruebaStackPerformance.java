@@ -2,7 +2,7 @@ package ej01StackPerformance;
 
 import net.datastructures.Stack;
 
-public class StackPerformanceTest {
+public class PruebaStackPerformance {
     
     public static void main(String[] args) {
         // Crear las tres implementaciones de pilas
