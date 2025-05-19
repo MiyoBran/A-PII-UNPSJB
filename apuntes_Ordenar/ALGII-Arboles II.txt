@@ -1,0 +1,184 @@
+====================================
+          ÁRBOLES II – AVL
+====================================
+
+------------------------------------
+1. INTRODUCCIÓN A LOS ÁRBOLES AVL
+------------------------------------
+
+En una estructura de datos, las operaciones fundamentales son:
+    • Agregar elementos  
+    • Eliminar elementos  
+
+Sin embargo, el orden en que agregamos datos puede generar
+**desbalanceo**. No siempre podemos garantizar un árbol equilibrado
+sin aplicar una estrategia.
+
+► Existen dos enfoques principales:
+
+1. **Carga total seguida de reequilibrado**  
+   → Primero se inserta todo, luego se balancea.
+
+2. **Balanceo durante la inserción**  
+   → Se detecta el desbalance en el momento y se corrige.
+
+----------------------------------------------
+2. RECORRIDO PRIMERO EN AMPLITUD (BFS)
+----------------------------------------------
+
+También conocido como **breadth-first traversal**.
+
+► A diferencia de preorden, inorden y postorden, este recorrido
+procesa los **niveles** del árbol de arriba hacia abajo.
+
+→ Útil en contextos como:
+   - Juegos (Ta-Te-Ti, Ajedrez)  
+   - Decisiones por niveles  
+   - Árboles enormes donde se exploran posibilidades gradualmente
+
+► Implementación:
+   - Se utiliza una **cola (FIFO)**  
+   - En cada paso: se **visita un nodo**, se **encolan sus hijos**
+
+✔ Complejidad temporal: **O(n)**  
+   - n llamadas a `enqueue`  
+   - n llamadas a `dequeue`  
+
+----------------------------------------------
+3. ÁRBOLES BALANCEADOS
+----------------------------------------------
+
+El objetivo es lograr una **estructura eficiente** para operaciones
+de búsqueda, inserción y eliminación.
+
+✔ Árbol desbalanceado ≈ lista → complejidad: **O(n)**  
+✔ Árbol balanceado (AVL) → complejidad: **O(log n)**  
+
+Los **árboles AVL** son árboles binarios de búsqueda (ABB) que
+mantienen su balance mediante **rotaciones**.
+
+----------------------------------------------
+4. ROTACIONES EN ÁRBOLES AVL
+----------------------------------------------
+
+Cuando se inserta un nodo y se rompe el equilibrio, se realizan
+**rotaciones locales** para restaurarlo.
+
+► Ejemplo intuitivo:
+
+- Si B es raíz y A debe insertarse a la izquierda:
+   → Se ubica A como hijo izquierdo de B  
+   → Si el árbol queda desbalanceado, se rota:
+     - A sube, B baja (rotación hacia la derecha)
+
+✔ Cuidado con los **hijos de A**:
+   - El menor de A se mantiene a su izquierda  
+   - El mayor debe evaluarse respecto de B para conservar el orden
+
+► Tipos de rotaciones:
+
+• **Rotación simple**  
+   – Rotar subárbol izquierdo a la derecha  
+   – Rotar subárbol derecho a la izquierda  
+
+• **Rotación doble**  
+   – Combina dos rotaciones simples cuando el desbalance es más complejo
+
+✔ Cada rotación tiene como objetivo:
+   - Mantener la propiedad de orden del ABB  
+   - Restaurar el equilibrio del árbol  
+
+----------------------------------------------
+RESUMEN
+----------------------------------------------
+
+- **AVL**: árbol binario de búsqueda auto-balanceado  
+- **Balanceo**: realizado mediante rotaciones  
+- **Recorridos**:
+   - Profundidad: Preorden, Inorden, Postorden  
+   - Amplitud: Breadth-first con cola (O(n))
+
+- **Eficiencia**:
+   - Árbol balanceado: O(log n)  
+   - Árbol desbalanceado: O(n)
+
+
+============================================
+ BALANCEO DE ÁRBOLES BINARIOS DE BÚSQUEDA
+============================================
+
+------------------------------------------------
+1. DESBALANCEO EN ÁRBOLES BINARIOS DE BÚSQUEDA
+------------------------------------------------
+
+Un árbol binario de búsqueda (ABB) puede desbalancearse cuando:
+
+• Se agregan nodos secuencialmente hacia un solo lado  
+  → El árbol se "aplana" y se parece a una **lista enlazada**  
+  → La complejidad de las operaciones pasa a ser **O(n)**
+
+✔ Sin embargo, se puede **reestructurar** el árbol modificando
+unas pocas referencias y devolverlo a una forma **balanceada**.
+
+✔ Esto permite reducir la complejidad a **O(log n)**
+
+► Cuando el desbalanceo **no es lineal** (es decir, un hijo va
+a la izquierda y el otro a la derecha), se requiere una **doble rotación**:
+
+   1. Una rotación para "alinear" los nodos  
+   2. Otra rotación para balancear el árbol
+
+✔ En la práctica, este proceso se llama **reestructuración de
+trinodos** y puede resolverse mediante:
+   - **Rotación única**
+   - **Rotación doble**
+   
+Dependiendo del patrón de desbalanceo (zig-zig o zig-zag).
+
+------------------------------------------------
+2. ÁRBOLES AVL
+------------------------------------------------
+
+Los árboles AVL (por Adel’son-Vel’skii and Landis) son una clase
+de árboles binarios de búsqueda **auto-balanceados**.
+
+► Propiedad de **altura-equilibrio**:  
+   Para cada nodo interno `p`, la **diferencia de alturas** entre
+   su hijo izquierdo e hijo derecho es a lo sumo **1**.
+
+✔ Esta propiedad se verifica **después de cada inserción
+o eliminación de un nodo**.
+
+► Proposición:  
+   La altura de un árbol AVL con `n` nodos es **O(log n)**  
+   → Justificación matemática (ver pág. 480 del libro base)
+
+-----------------------------------------------
+3. OPERACIONES Y ROTACIONES EN ÁRBOLES AVL
+-----------------------------------------------
+
+► **Agregar un nodo**:
+   - Tras la inserción, se verifica la altura de los ancestros  
+   - Si algún nodo queda desbalanceado (diferencia de altura > 1):
+     → Se aplica una **rotación simple** o **doble** para restaurar el balance
+
+Ejemplo:
+- Si los subárboles crecen únicamente hacia un lado (izquierda o derecha)
+  → Se realiza una **rotación simple**
+
+- Si el crecimiento es en zig-zag (ej: hijo izquierdo con hijo derecho)
+  → Se requiere una **rotación doble**
+
+► ¿Cuándo rotamos?  
+   – Cuando la diferencia de alturas entre los subárboles de un nodo
+     supera **1**  
+   – Es decir, cuando la **propiedad AVL se rompe**
+
+► **Eliminar un nodo**:
+   - También puede provocar desbalance  
+   - Se actualizan las alturas de los ancestros  
+   - Se realizan rotaciones si es necesario para restaurar el balance
+
+✔ Al igual que con la inserción, las rotaciones deben mantener
+la propiedad de orden del árbol binario de búsqueda.
+
