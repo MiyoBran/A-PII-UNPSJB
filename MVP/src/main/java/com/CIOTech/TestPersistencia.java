@@ -1,5 +1,5 @@
-// En src/main/java/com/CIOTech/TestPersistencia.java (o un subpaquete)
-package com.CIOTech; // o com.CIOTech.test.manual
+// En src/main/java/com/CIOTech/TestPersistencia.java
+package com.CIOTech;
 
 import com.CIOTech.MVP.model.Producto;
 import com.CIOTech.MVP.dao.ProductoDao;
@@ -8,39 +8,38 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class TestPersistencia {
-
     public static void main(String[] args) {
-        // --- Inicio de Prueba Rápida de Persistencia ---
-        System.out.println("Iniciando prueba de persistencia...");
-
+        System.out.println("Iniciando TestPersistencia.main()...");
         ProductoDao productoDao = new ProductoDao();
 
-        // Crear un nuevo producto
-        Producto nuevoProducto = new Producto("Laptop Pro X", "Laptop super potente", new BigDecimal("1250.75"), 15);
-        System.out.println("Guardando producto: " + nuevoProducto.getNombre());
-        productoDao.guardar(nuevoProducto);
-        System.out.println("Producto guardado con ID: " + nuevoProducto.getId());
+        System.out.println("Intentando guardar un nuevo producto...");
+        Producto p1 = new Producto("Mouse Inalámbrico", "Mouse ergonómico", new BigDecimal("25.99"), 75);
+        productoDao.guardar(p1);
+        if (p1.getId() != null) {
+            System.out.println("Producto guardado con ID: " + p1.getId() + " Nombre: " + p1.getNombre());
+        } else {
+            System.err.println("Error: El ID del producto p1 es nulo después de guardar.");
+        }
 
-        // Buscar el producto
-        if (nuevoProducto.getId() != null) {
-            Producto productoEncontrado = productoDao.buscarPorId(nuevoProducto.getId());
-            if (productoEncontrado != null) {
-                System.out.println("Producto encontrado: " + productoEncontrado.getNombre() + ", Precio: " + productoEncontrado.getPrecio());
-            } else {
-                System.err.println("Error: No se encontró el producto con ID: " + nuevoProducto.getId());
+        Producto p2 = new Producto("Monitor Curvo 27\"", "Monitor LED curvo", new BigDecimal("299.50"), 20);
+        productoDao.guardar(p2);
+        if (p2.getId() != null) {
+            System.out.println("Producto guardado con ID: " + p2.getId() + " Nombre: " + p2.getNombre());
+        } else {
+            System.err.println("Error: El ID del producto p2 es nulo después de guardar.");
+        }
+
+        System.out.println("Listando todos los productos DESPUÉS de guardar:");
+        List<Producto> todos = productoDao.obtenerTodos();
+        if (todos.isEmpty()) {
+            System.out.println("No se encontraron productos.");
+        } else {
+            for (Producto p : todos) {
+                System.out.println("- " + p.getNombre() + " (ID: " + p.getId() + ", Precio: " + p.getPrecio() + ")");
             }
         }
 
-        // Listar todos los productos
-        System.out.println("Listando todos los productos:");
-        List<Producto> todosLosProductos = productoDao.obtenerTodos();
-        for (Producto p : todosLosProductos) {
-            System.out.println("- " + p.getNombre() + " (ID: " + p.getId() + ")");
-        }
-
-        System.out.println("Cerrando EntityManagerFactory...");
         JpaUtil.shutdown();
-        System.out.println("Prueba de persistencia finalizada.");
-        // --- Fin de Prueba Rápida de Persistencia ---
+        System.out.println("TestPersistencia.main() finalizado.");
     }
 }
