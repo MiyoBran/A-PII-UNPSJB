@@ -125,3 +125,13 @@ Maven-m2e	https://download.eclipse.org/technology/m2e/releases/latest	Enabled
 Spring Tools for Eclipse	https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/e4.35/	Enabled
 https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/e4.36/
 https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/latest/
+
+Agregar JavaFX manualmente a Eclipse
+--> Como dependencia de Maven
+-> Marketplace e(fx) --> install
+
+Para Scene Builder en Linux
+cd ~/Descargas
+wget http://archive.ubuntu.com/ubuntu/pool/main/libf/libffi/libffi7_3.3-4_amd64.deb
+
+sudo dpkg -i libffi7_3.3-4_amd64.deb
